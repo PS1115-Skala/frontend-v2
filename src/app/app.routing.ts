@@ -6,6 +6,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { DashboardComponent } from "./features/dashboard/dashboard.component";
 import { AuthComponent } from "./features/auth/auth.component";
+import { RequestsComponent } from "./features/requests/requests.component";
 
 const routes: Routes = [
   {
@@ -30,6 +31,16 @@ const routes: Routes = [
       {
         path: "",
         loadChildren: "./features/auth/auth.module#AuthModule",
+      },
+    ],
+  },
+  {
+    path: "requests",
+    component: RequestsComponent,
+    children: [
+      {
+        path: "",
+        loadChildren: "./features/requests/requests.module#RequestsModule",
       },
     ],
   },

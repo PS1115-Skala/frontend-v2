@@ -1,0 +1,55 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <h2>Solicitudes Realizadas</h2>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-lg-4 col-md-6" *ngFor="let room of filteredRooms">
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h3 class="card-title">
+              <a routerLink="">{{ room.name }}</a>
+            </h3>
+            <h4 class="card-category">
+              {{ room.id }} - {{ room.manager_id | uppercase }}
+            </h4>
+          </div>
+
+          <div class="card-body row">
+            <div class="col-12">
+              <a routerLink="">
+                <img class="img-fill" [src]="room.path_image" [alt]="room.name"
+              /></a>
+            </div>
+            <div class="col-12 mt-4">
+              <p>{{ room.description }}</p>
+            </div>
+            <div class="col-6">
+              <a
+                button
+                mat-raised-button
+                class="btn btn-default btn-block h-75"
+                routerLink="/dashboard/horario/{{ room?.id }}"
+              >
+                Ver Horarios
+              </a>
+            </div>
+            <div class="col-6 .offset-2">
+              <a
+                button
+                mat-raised-button
+                class="btn btn-warning btn-block h-75"
+                routerLink="/dashboard/reserva/{{ room.id }}"
+              >
+                Reservar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
