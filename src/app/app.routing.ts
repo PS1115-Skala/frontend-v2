@@ -11,6 +11,7 @@ import { LaboratoriesComponent } from "./features/laboratories/laboratories.comp
 import { SpecialRequestsComponent } from "./features/special-requests/special-requests.component";
 import { AdminlabfComponent } from "./features/adminlabf/adminlabf.component";
 import { AdminRoomsComponent } from "./features/admin-rooms/admin-rooms.component";
+import { AdminUsersComponent } from "./features/admin-users/admin-users.component";
 
 const routes: Routes = [
   {
@@ -88,6 +89,17 @@ const routes: Routes = [
         path: "",
         loadChildren:
           "./features/admin-rooms/admin-rooms.module#AdminRoomsModule",
+      },
+    ],
+  },
+  {
+    path: "admin-users",
+    component: AdminUsersComponent,
+    children: [
+      {
+        path: "",
+        loadChildren:
+          "./features/admin-users/admin-users.module#AdminUsersModule",
       },
     ],
   },

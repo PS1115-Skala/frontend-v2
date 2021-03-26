@@ -94,7 +94,7 @@ export class SidebarComponent implements OnInit {
 
   addUsuariosRoute() {
     this.menuItems.push({
-      path: "/usuarios",
+      path: "/admin-users",
       title: "Usuarios",
       icon: "people",
       class: "",
