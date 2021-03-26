@@ -32,8 +32,8 @@ export class RequestsService {
   constructor(private http: HttpClient) {}
 
   /** Servicio para consultar las solicitudes de reserva de un administrador de laboratorio
-   * @param {string} userId Id de Usuario a consultar salas
-   * @returns {Rooms[]} Lista de Salas que pertenecen al usuario userId
+   * @param {string} userId Id de Usuario a consultar solicitudes
+   * @returns {RequestsResponseAdmin[]} Lista de solicitudes que pertenecen al usuario userId
    */
   getRequestsAdminLab(userId: string): Observable<RequestsResponseAdmin[]> {
     const url = `${API}/solicitudes/admin/${userId}/`;
@@ -43,8 +43,8 @@ export class RequestsService {
   }
 
   /** Servicio para consultar las solicitudes que pertenecen a un usuario.
-   *
-   * @returns {Rooms[]}
+   * @param {string} userId Id de Usuario a consultar salas
+   * @returns {RequestsResponse[]} Lista de solicitudes que pertenecen al usuario userId
    */
   getRequestsUser(userId: string): Observable<RequestsResponse[]> {
     const url = `${API}/solicitudes/usuario/${userId}/`;
