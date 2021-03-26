@@ -41,6 +41,7 @@ export class SignUpComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("y yo tambien");
     this.error = false;
 
     this.form = this.formBuilder.group({
@@ -70,7 +71,10 @@ export class SignUpComponent implements OnInit {
               ],
             },
           };
-          this.router.navigate(["auth/verify-password"], navigationExtras);
+          this.router.navigate(
+            ["auth/signup/verify-password"],
+            navigationExtras
+          );
         },
         (error) => {
           this.LoadingBar.complete();

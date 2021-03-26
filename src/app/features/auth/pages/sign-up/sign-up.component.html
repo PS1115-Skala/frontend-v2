@@ -1,147 +1,77 @@
-<div class="row">
-  <div class="col-md-9 ml-auto mr-auto">
-    <div class="card card-signup">
-      <div class="card-header card-header-warning text-center">
-        <h2 class="card-title text-center">Registro</h2>
+<div class="text-center justify-content-center">
+  <h4 class="mt-3">Por favor indique su USBID y contraseña institucional</h4>
+</div>
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group has-default">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <i class="material-icons">face</i>
+        </span>
       </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-5 ml-auto">
-            <div class="info info-horizontal">
-              <div class="icon icon-rose" style="display: flex">
-                <i class="material-icons">speed</i>
-                <h4 class="info-title">&nbsp;&nbsp;Facilidad</h4>
-              </div>
-              <div class="description">
-                <p class="description" style="text-align: justify">
-                  Reserva el aula o laboratorio de tu preferencia perteneciente
-                  al laboratorio F de forma rapida y sencilla.
-                </p>
-              </div>
-            </div>
-            <div class="info info-horizontal">
-              <div class="icon icon-primary" style="display: flex">
-                <i class="material-icons">groups</i>
-                <h4 class="info-title">&nbsp;&nbsp;Variedad</h4>
-              </div>
-              <div class="description">
-                <p class="description" style="text-align: justify">
-                  Observa las caracteristicas que tienen las diversas aulas y
-                  laboratorios pertenecientes al laboratorio F.
-                </p>
-              </div>
-            </div>
-            <div class="info info-horizontal">
-              <div class="icon icon-info" style="display: flex">
-                <i class="material-icons">self_improvement</i>
-                <h4 class="info-title">&nbsp;&nbsp;Comodidad</h4>
-              </div>
-              <div class="description">
-                <p class="description" style="text-align: justify">
-                  Observa la disponibilidad de las diversas aulas o laboratorios
-                  de tu preferencia.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-5 mr-auto">
-            <div class="text-center justify-content-center">
-              <h4 class="mt-3">
-                Por favor indique su USBID y contraseña institucional
-              </h4>
-            </div>
-            <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-              <div class="form-group has-default">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">face</i>
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="USBID"
-                    required
-                    formControlName="usbId"
-                    autocomplete="off"
-                  />
-                </div>
-              </div>
-              <div
-                *ngIf="
-                  form.controls['usbId'].invalid &&
-                  (form.controls['usbId'].dirty ||
-                    form.controls['usbId'].touched)
-                "
-              >
-                <div *ngIf="form.controls['usbId'].errors.required">
-                  <p
-                    style="
-                      color: rgb(228, 4, 4);
-                      margin: -0.5%;
-                      margin-left: 20%;
-                    "
-                  >
-                    No puedes dejar el campo en blanco.
-                  </p>
-                </div>
-              </div>
-              <div class="form-group has-default">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">lock_outline</i>
-                    </span>
-                  </div>
-                  <input
-                    type="password"
-                    placeholder="Contraseña"
-                    class="form-control"
-                    required
-                    formControlName="clave"
-                  />
-                </div>
-              </div>
-              <div
-                *ngIf="
-                  form.controls['clave'].invalid &&
-                  (form.controls['clave'].dirty ||
-                    form.controls['clave'].touched)
-                "
-              >
-                <div *ngIf="form.controls['clave'].errors.required">
-                  <p
-                    style="
-                      color: rgb(228, 4, 4);
-                      margin: -0.5%;
-                      margin-left: 20%;
-                    "
-                  >
-                    No puedes dejar el campo en blanco.
-                  </p>
-                </div>
-              </div>
-              <div class="text-center">
-                <h4 class="mt-3" style="font-size: 15px">
-                  Atención: No almacenaremos su contraseña institucional en
-                  nuestro sistema
-                </h4>
-              </div>
-              <div class="text-center">
-                <button
-                  class="btn btn-warning btn-round"
-                  [disabled]="form.invalid"
-                  type="submit"
-                  style="color: white"
-                >
-                  Continuar registro
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="USBID"
+        required
+        formControlName="usbId"
+        autocomplete="off"
+      />
     </div>
   </div>
-</div>
+  <div
+    *ngIf="
+      form.controls['usbId'].invalid &&
+      (form.controls['usbId'].dirty || form.controls['usbId'].touched)
+    "
+  >
+    <div *ngIf="form.controls['usbId'].errors.required">
+      <p style="color: rgb(228, 4, 4); margin: -0.5%; margin-left: 20%">
+        No puedes dejar el campo en blanco.
+      </p>
+    </div>
+  </div>
+  <div class="form-group has-default">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <i class="material-icons">lock_outline</i>
+        </span>
+      </div>
+      <input
+        type="password"
+        placeholder="Contraseña"
+        class="form-control"
+        required
+        formControlName="clave"
+      />
+    </div>
+  </div>
+  <div
+    *ngIf="
+      form.controls['clave'].invalid &&
+      (form.controls['clave'].dirty || form.controls['clave'].touched)
+    "
+  >
+    <div *ngIf="form.controls['clave'].errors.required">
+      <p style="color: rgb(228, 4, 4); margin: -0.5%; margin-left: 20%">
+        No puedes dejar el campo en blanco.
+      </p>
+    </div>
+  </div>
+  <div class="text-center">
+    <h4 class="mt-3" style="font-size: 15px">
+      Atención: No almacenaremos su contraseña institucional en nuestro sistema
+    </h4>
+  </div>
+  <div class="text-center">
+    <button
+      class="btn btn-warning btn-round"
+      [disabled]="form.invalid"
+      type="submit"
+      style="color: white"
+    >
+      Continuar registro
+    </button>
+  </div>
+</form>

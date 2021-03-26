@@ -15,6 +15,7 @@ import { SignupnewpasswordComponent } from "./pages/signupnewpassword/signupnewp
 import { AuthRoutes } from "./auth.routing.module";
 import { RouterModule } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
+import { SignuplayoutComponent } from './components/signuplayout/signuplayout.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MatDialogModule } from "@angular/material/dialog";
     SignupnewpasswordComponent,
     DialogErrorLogin,
     DialogSignUp,
+    SignuplayoutComponent,
   ],
   imports: [
     CommonModule,
