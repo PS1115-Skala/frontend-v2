@@ -9,32 +9,7 @@ declare interface RouteInfo {
   icon: string;
   class: string;
 }
-export const ROUTES: RouteInfo[] = [
-  {
-    path: "/dashboard/list-rooms",
-    title: "Dashboard",
-    icon: "dashboard",
-    class: "",
-  },
-  {
-    path: "/requests/all",
-    title: "Solicitudes",
-    icon: "notifications",
-    class: "",
-  },
-  {
-    path: "/laboratories/all",
-    title: "Laboratorios",
-    icon: "desktop_windows",
-    class: "",
-  },
-  {
-    path: "/special-requests/list",
-    title: "Reservas Especiales",
-    icon: "flare",
-    class: "",
-  },
-];
+export let ROUTES: RouteInfo[] = [];
 
 @Component({
   selector: "app-sidebar",
@@ -51,13 +26,47 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     let userId = this.coreService.getuserId();
     let userType = this.coreService.getuserType();
-    this.coreService.getUserDetails(userId).subscribe((user) => {
-      this.userName = user[0].name;
-    });
-    this.coreService.getTrimester().subscribe((term) => {
-      this.trimester = term[0].id;
-    });
-    this.menuItems = ROUTES.filter((menuItem) => menuItem);
+    this.userName = localStorage.getItem("userName");
+    this.trimester = localStorage.getItem("term");
+    ROUTES = [
+      {
+        path: "/dashboard/list-rooms",
+        title: "Dashboard",
+        icon: "dashboard",
+        class: "",
+      },
+      {
+        path: "/requests/all",
+        title: "Solicitudes",
+        icon: "notifications",
+        class: "",
+      },
+      {
+        path: "/laboratories/all",
+        title: "Laboratorios",
+        icon: "desktop_windows",
+        class: "",
+      },
+      {
+        path: "/special-requests/list",
+        title: "Reservas Especiales",
+        icon: "flare",
+        class: "",
+      },
+    ];
+    if (!this.userName) {
+      this.coreService.getUserDetails(userId).subscribe((user) => {
+        localStorage.setItem("userName", user[0].name);
+        this.userName = user[0].name;
+      });
+    }
+    if (!this.trimester) {
+      this.coreService.getTrimester().subscribe((term) => {
+        localStorage.setItem("term", term[0].id);
+        this.trimester = term[0].id;
+      });
+    }
+    this.menuItems = ROUTES;
     if (userType == USER_TYPE.LAB_F) {
       this.addAdminRoute();
       this.addUsuariosRoute();
