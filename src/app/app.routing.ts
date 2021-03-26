@@ -7,6 +7,7 @@ import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.compon
 import { DashboardComponent } from "./features/dashboard/dashboard.component";
 import { AuthComponent } from "./features/auth/auth.component";
 import { RequestsComponent } from "./features/requests/requests.component";
+import { LaboratoriesComponent } from "./features/laboratories/laboratories.component";
 
 const routes: Routes = [
   {
@@ -41,6 +42,17 @@ const routes: Routes = [
       {
         path: "",
         loadChildren: "./features/requests/requests.module#RequestsModule",
+      },
+    ],
+  },
+  {
+    path: "laboratories",
+    component: LaboratoriesComponent,
+    children: [
+      {
+        path: "",
+        loadChildren:
+          "./features/laboratories/laboratories.module#LaboratoriesModule",
       },
     ],
   },

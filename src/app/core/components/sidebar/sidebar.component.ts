@@ -21,6 +21,12 @@ export const ROUTES: RouteInfo[] = [
     icon: "notifications",
     class: "",
   },
+  {
+    path: "/laboratories/all",
+    title: "Laboratorios",
+    icon: "desktop_windows",
+    class: "",
+  },
 ];
 
 @Component({
