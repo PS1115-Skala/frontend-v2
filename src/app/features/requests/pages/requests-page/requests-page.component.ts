@@ -13,9 +13,9 @@ import { RequestsService } from "../../services/requests.service";
   styleUrls: ["./requests-page.component.css"],
 })
 export class RequestsPageComponent implements OnInit {
-  private isAdmin: boolean;
-  private requests: RequestsResponse[];
-  private requestsAdmin: RequestsResponseAdmin[];
+  isAdmin: boolean;
+  requests: RequestsResponse[];
+  requestsAdmin: RequestsResponseAdmin[];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   isLoading: boolean;

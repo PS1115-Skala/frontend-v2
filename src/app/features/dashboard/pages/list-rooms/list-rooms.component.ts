@@ -13,10 +13,10 @@ import { CoreService } from "app/core/services/core.service";
   styleUrls: ["./list-rooms.component.css"],
 })
 export class ListRoomsComponent implements OnInit {
-  private allRooms: Room[] = [];
-  private _filter: string = "";
-  private filteredRooms: Room[] = [];
-  private user: User;
+  public allRooms: Room[] = [];
+  public _filter: string = "";
+  public filteredRooms: Room[] = [];
+  public user: User;
 
   constructor(
     private dashboardService: DashboardService,
