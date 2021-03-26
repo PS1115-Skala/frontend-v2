@@ -29,7 +29,7 @@ export const ROUTES: RouteInfo[] = [
     class: "",
   },
   {
-    path: "/reservas-especiales",
+    path: "/special-requests/list",
     title: "Reservas Especiales",
     icon: "flare",
     class: "",

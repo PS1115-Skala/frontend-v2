@@ -8,6 +8,7 @@ import { DashboardComponent } from "./features/dashboard/dashboard.component";
 import { AuthComponent } from "./features/auth/auth.component";
 import { RequestsComponent } from "./features/requests/requests.component";
 import { LaboratoriesComponent } from "./features/laboratories/laboratories.component";
+import { SpecialRequestsComponent } from "./features/special-requests/special-requests.component";
 
 const routes: Routes = [
   {
@@ -53,6 +54,17 @@ const routes: Routes = [
         path: "",
         loadChildren:
           "./features/laboratories/laboratories.module#LaboratoriesModule",
+      },
+    ],
+  },
+  {
+    path: "special-requests",
+    component: SpecialRequestsComponent,
+    children: [
+      {
+        path: "",
+        loadChildren:
+          "./features/special-requests/special-requests.module#SpecialRequestsModule",
       },
     ],
   },
