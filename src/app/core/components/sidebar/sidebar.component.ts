@@ -76,7 +76,7 @@ export class SidebarComponent implements OnInit {
 
   addAdminRoute() {
     this.menuItems.push({
-      path: "/labf-admin",
+      path: "/admin-labf",
       title: "Administrar",
       icon: "notifications",
       class: "",
