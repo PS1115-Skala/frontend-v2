@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { USER_TYPE } from "app/core/constants/userType";
 import { CoreService } from "app/core/services/core.service";
 
 declare const $: any;
@@ -27,6 +28,12 @@ export const ROUTES: RouteInfo[] = [
     icon: "desktop_windows",
     class: "",
   },
+  {
+    path: "/reservas-especiales",
+    title: "Reservas Especiales",
+    icon: "flare",
+    class: "",
+  },
 ];
 
 @Component({
@@ -43,6 +50,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     let userId = this.coreService.getuserId();
+    let userType = this.coreService.getuserType();
     this.coreService.getUserDetails(userId).subscribe((user) => {
       this.userName = user[0].name;
     });
@@ -50,11 +58,55 @@ export class SidebarComponent implements OnInit {
       this.trimester = term[0].id;
     });
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
+    if (userType == USER_TYPE.LAB_F) {
+      this.addAdminRoute();
+      this.addUsuariosRoute();
+      this.addMetricRoute();
+    }
+    if (userType == USER_TYPE.LAB_ADMIN) {
+      this.addNewRoomsRoute();
+    }
   }
   isMobileMenu() {
     if ($(window).width() > 991) {
       return false;
     }
     return true;
+  }
+
+  addAdminRoute() {
+    this.menuItems.push({
+      path: "/labf-admin",
+      title: "Administrar",
+      icon: "notifications",
+      class: "",
+    });
+  }
+
+  addNewRoomsRoute() {
+    this.menuItems.push({
+      path: "/new-rooms",
+      title: "Nuevas Salas",
+      icon: "notifications",
+      class: "",
+    });
+  }
+
+  addUsuariosRoute() {
+    this.menuItems.push({
+      path: "/usuarios",
+      title: "Usuarios",
+      icon: "people",
+      class: "",
+    });
+  }
+
+  addMetricRoute() {
+    this.menuItems.push({
+      path: "/metricas",
+      title: "Métricas",
+      icon: "analytics",
+      class: "",
+    });
   }
 }
