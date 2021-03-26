@@ -22,6 +22,7 @@ import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
 import { DashboardComponent } from "./features/dashboard/dashboard.component";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TokenInterceptor } from "./core/interceptors/token.interceptor";
+import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
   imports: [

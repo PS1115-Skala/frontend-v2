@@ -64,9 +64,10 @@ export class ListRoomsComponent implements OnInit {
 
   getRooms() {
     let userType = this.coreService.getuserType();
+    let userId = this.coreService.getuserId();
     if (userType == USER_TYPE.LAB_ADMIN) {
       this.dashboardService
-        .getRoomsAdminLab(this.user.id)
+        .getRoomsAdminLab(userId)
         .subscribe((rooms: Room[]) => {
           this.allRooms = [...rooms];
           this.filteredRooms = [...rooms];

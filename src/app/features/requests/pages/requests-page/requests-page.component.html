@@ -6,48 +6,108 @@
       </div>
     </div>
     <hr />
-    <div class="row">
-      <div class="col-lg-4 col-md-6" *ngFor="let room of filteredRooms">
-        <div class="card">
-          <div class="card-header card-header-info">
-            <h3 class="card-title">
-              <a routerLink="">{{ room.name }}</a>
-            </h3>
-            <h4 class="card-category">
-              {{ room.id }} - {{ room.manager_id | uppercase }}
-            </h4>
-          </div>
-
-          <div class="card-body row">
-            <div class="col-12">
-              <a routerLink="">
-                <img class="img-fill" [src]="room.path_image" [alt]="room.name"
-              /></a>
-            </div>
-            <div class="col-12 mt-4">
-              <p>{{ room.description }}</p>
-            </div>
-            <div class="col-6">
-              <a
-                button
-                mat-raised-button
-                class="btn btn-default btn-block h-75"
-                routerLink="/dashboard/horario/{{ room?.id }}"
-              >
-                Ver Horarios
-              </a>
-            </div>
-            <div class="col-6 .offset-2">
-              <a
-                button
-                mat-raised-button
-                class="btn btn-warning btn-block h-75"
-                routerLink="/dashboard/reserva/{{ room.id }}"
-              >
-                Reservar
-              </a>
-            </div>
-          </div>
+    <div class="card mt-5">
+      <div class="card-header card-header-info">
+        <h4 class="card-title" style="height: 40px"></h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+            class="table"
+            datatable
+            [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger"
+            class="row-border hover"
+          >
+            <ng-container
+              *ngIf="isAdmin; then adminTemplate; else userTemplate"
+            ></ng-container>
+            <ng-template #adminTemplate>
+              <thead>
+                <tr *ngIf="!isLoading">
+                  <th>Solicitante</th>
+                  <th>Fecha de Solicitud</th>
+                  <th>Tipo</th>
+                  <th>Materia</th>
+                  <th>Sala</th>
+                  <th>Material solicitado</th>
+                  <th>Capacidad</th>
+                  <th>Horario</th>
+                  <th>Aprobar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let request of requestsAdmin">
+                  <td>{{ request.name }}</td>
+                  <td>{{ request.send_time | date }}</td>
+                  <td>{{ request.type | userType }}</td>
+                  <td>{{ request.subject_id }}</td>
+                  <td>{{ request.room_id }}</td>
+                  <td>{{ request.material_needed }}</td>
+                  <td>{{ request.quantity }}</td>
+                  <td>Falta horario</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      (click)="acceptRequest(request.id)"
+                      [disabled]="actionsDisabled"
+                    >
+                      Si
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      (click)="openRejectionDialog(request.id)"
+                      [disabled]="actionsDisabled"
+                    >
+                      No
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </ng-template>
+            <ng-template #userTemplate>
+              <thead>
+                <tr *ngIf="!isLoading">
+                  <th>Materia</th>
+                  <th>Fecha de Solicitud</th>
+                  <th>Sala</th>
+                  <th>Material solicitado</th>
+                  <th>Capacidad</th>
+                  <th>Horario</th>
+                  <th>Estado</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let request of requests">
+                  <td>{{ request.subject_id }}</td>
+                  <td>{{ request.send_time | date }}</td>
+                  <td>{{ request.room_id }}</td>
+                  <td>{{ request.material_needed }}</td>
+                  <td>{{ request.quantity }}</td>
+                  <td>Falta horario</td>
+                  <td>{{ request.status | requestStatus }}</td>
+                  <td>
+                    <div *ngIf="request.status != 'P'">
+                      No se puede eliminar
+                    </div>
+                    <button
+                      mat-flat-button
+                      (click)="deletedRequest(request.id)"
+                      [disabled]="actionsDisabled"
+                      *ngIf="request.status == 'P'"
+                    >
+                      <div>
+                        <i class="material-icons">close</i>
+                      </div>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </ng-template>
+          </table>
         </div>
       </div>
     </div>
