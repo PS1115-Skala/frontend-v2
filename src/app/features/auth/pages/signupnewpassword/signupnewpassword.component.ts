@@ -85,6 +85,7 @@ export class SignupnewpasswordComponent implements OnInit {
         .subscribe(
           () => {
             this.LoadingBar.stop();
+            localStorage.removeItem("tokenSignUp");
             this.router.navigate(["auth/login"]);
           },
           (error) => {
