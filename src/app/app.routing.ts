@@ -10,6 +10,7 @@ import { RequestsComponent } from "./features/requests/requests.component";
 import { LaboratoriesComponent } from "./features/laboratories/laboratories.component";
 import { SpecialRequestsComponent } from "./features/special-requests/special-requests.component";
 import { AdminlabfComponent } from "./features/adminlabf/adminlabf.component";
+import { AdminRoomsComponent } from "./features/admin-rooms/admin-rooms.component";
 
 const routes: Routes = [
   {
@@ -76,6 +77,17 @@ const routes: Routes = [
       {
         path: "",
         loadChildren: "./features/adminlabf/adminlabf.module#AdminlabfModule",
+      },
+    ],
+  },
+  {
+    path: "admin-rooms",
+    component: AdminRoomsComponent,
+    children: [
+      {
+        path: "",
+        loadChildren:
+          "./features/admin-rooms/admin-rooms.module#AdminRoomsModule",
       },
     ],
   },

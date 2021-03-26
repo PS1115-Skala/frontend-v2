@@ -85,8 +85,8 @@ export class SidebarComponent implements OnInit {
 
   addNewRoomsRoute() {
     this.menuItems.push({
-      path: "/new-rooms",
-      title: "Nuevas Salas",
+      path: "/admin-rooms",
+      title: "Administracion de Salas",
       icon: "notifications",
       class: "",
     });
