@@ -49,4 +49,25 @@ export class DashboardService {
     const url = `${API}/salas/`;
     return this.http.get<Room[]>(url).pipe(catchError(this.handleError));
   }
+
+  /** Servicio para consultar los detalles de la sala roomId
+   *
+   * @param {string} roomId Id de la sala a consultar detalles
+   * @returns {Rooms[]}
+   */
+  getRoomDetails(roomId: string): Observable<Room[]> {
+    const url = `${API}/salas/${roomId}/`;
+    return this.http.get<Room[]>(url);
+  }
+
+  /** Servicio para consultar los items de una sala
+   *
+   * @param {string} roomId Id de la sala a consultar items
+   * @returns {Item[]}
+   */
+  getRoomItems(roomId: string): Observable<Item[]> {
+    const url = `${API}/salas/${roomId}/items/`;
+    return this.http.get<Item[]>(url);
+  }
+
 }

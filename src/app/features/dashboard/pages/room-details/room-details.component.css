@@ -1,0 +1,9 @@
+.img-sala{
+    width: 100%;
+}
+
+#bottom {
+    position: absolute;
+    width: 50%;
+    bottom: 10px;
+}
