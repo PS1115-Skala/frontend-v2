@@ -6,6 +6,7 @@ import { catchError, retry } from "rxjs/operators";
 import { Room } from "../models/room";
 import { User } from "app/core/models/user";
 import { CoreService } from "app/core/services/core.service";
+import { Item } from "../models/item";
 
 const API = environment.api_url;
 
@@ -69,5 +70,4 @@ export class DashboardService {
     const url = `${API}/salas/${roomId}/items/`;
     return this.http.get<Item[]>(url);
   }
-
 }

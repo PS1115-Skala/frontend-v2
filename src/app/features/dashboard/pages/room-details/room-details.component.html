@@ -40,7 +40,7 @@
                   <div class="col-6">
                     <button
                       type="button"
-                      class="btn btn-warning btn-lg btn-block"
+                      class="btn btn-warning btn-lg btn-block btn-description"
                       routerLink="/horario/{{ room?.id }}"
                     >
                       Horarios
@@ -50,8 +50,8 @@
                   <div class="col-6">
                     <button
                       type="button"
-                      class="btn btn-info btn-lg btn-block"
-                      routerLink="/reserva/{{ idroom }}"
+                      class="btn btn-info btn-lg btn-block btn-description"
+                      [routerLink]="['../../room-reservation/', roomId]"
                     >
                       Reservar
                     </button>
