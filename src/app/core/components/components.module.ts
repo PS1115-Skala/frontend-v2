@@ -14,6 +14,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSelectModule } from "@angular/material/select";
 import { DataTablesModule } from "angular-datatables";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
   imports: [
@@ -46,6 +48,8 @@ import { MatDialogModule } from "@angular/material/dialog";
     MatTooltipModule,
     DataTablesModule,
     MatDialogModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
   ],
 })
 export class ComponentsModule {}

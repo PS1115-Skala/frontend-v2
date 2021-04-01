@@ -7,6 +7,9 @@ import { Room } from "../models/room";
 import { User } from "app/core/models/user";
 import { CoreService } from "app/core/services/core.service";
 import { Item } from "../models/item";
+import { Subjects } from "../models/subjects";
+import { Reservation } from "../models/reservation";
+import { USER_TYPE } from "app/core/constants/userType";
 
 const API = environment.api_url;
 
@@ -14,7 +17,7 @@ const API = environment.api_url;
   providedIn: "root",
 })
 export class DashboardService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private coreService: CoreService) {}
 
   /** Funcion para manejo de errores
    *
@@ -69,5 +72,38 @@ export class DashboardService {
   getRoomItems(roomId: string): Observable<Item[]> {
     const url = `${API}/salas/${roomId}/items/`;
     return this.http.get<Item[]>(url);
+  }
+
+  /** Servicio para consultar las materias disponibles
+   * @returns {Subjects[]}
+   */
+  getSubjects(): Observable<Subjects[]> {
+    const url = `${API}/subjects/`;
+    return this.http.get<Subjects[]>(url);
+  }
+
+  /** Servicio para consultar el horario disponible de una Sala
+   *  @param {string} roomId Id de la sala a consultar items
+   *  @param {string} semanas semana a consultar
+   * @returns {Reservation[]}
+   */
+  getReservations(idSala: string, semanas: string): Observable<Reservation[]> {
+    const url = `${API}/reservas/${idSala}/semana/${semanas}/`;
+    return this.http.get<Reservation[]>(url);
+  }
+
+  /** Servicio para crear una solicitud o reserva de sala.
+   * @param {Reservation and dayHours} reservacion junto a su hora y dias de reserva.
+   * @returns {any} 204 si es exitosa
+   */
+  createRequest(reservation): Observable<any> {
+    let userType = this.coreService.getuserType();
+    let isAdmin = userType == USER_TYPE.LAB_ADMIN;
+    let url = isAdmin
+      ? `${API}/crear/reserva/`
+      : `${API}/crear/solicitudes/reserva/`;
+    return this.http
+      .post<any>(url, reservation)
+      .pipe(catchError(this.handleError));
   }
 }

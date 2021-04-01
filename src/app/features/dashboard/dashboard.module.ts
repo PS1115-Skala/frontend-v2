@@ -7,9 +7,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ComponentsModule } from "app/core/components/components.module";
 import { DashboardComponent } from "./dashboard.component";
 import { RoomDetailsComponent } from './pages/room-details/room-details.component';
+import { RoomReservationComponent } from './pages/room-reservation/room-reservation.component';
 
 @NgModule({
-  declarations: [ListRoomsComponent, DashboardComponent, RoomDetailsComponent],
+  declarations: [ListRoomsComponent, DashboardComponent, RoomDetailsComponent, RoomReservationComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(DashboardRoutes),
