@@ -1,0 +1,19 @@
+.img-sala{
+    width: 100%;
+}
+
+#bottom {
+    position: absolute;
+    width: 50%;
+    bottom: 10px;
+}
+
+@media (max-width: 991px) {
+    #bottom {
+        position: initial;
+        width: auto;
+    }
+    .btn-description{
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,213 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <h2>Reserva de Sala</h2>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="card" *ngIf="room">
+        <div class="card-header card-header-info">
+          <h3 class="card-title">Sala Seleccionada: {{ room.name }}</h3>
+          <h4 class="card-category">
+            {{ room.id }}
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <img
+                src="{{ picture }}"
+                alt="Imagen de la Sala"
+                class="img-sala"
+                height="300"
+              />
+            </div>
+            <div class="col-md-8 col-sm-12">
+              <form
+                [formGroup]="reservationForm"
+                (ngSubmit)="onSubmit()"
+                id="bottom"
+              >
+                <h3>Detalles de su Reserva</h3>
+                <mat-form-field>
+                  <mat-label>Nombre de la Materia</mat-label>
+                  <input
+                    formControlName="materia"
+                    type="text"
+                    placeholder="Nombre"
+                    aria-label="Materia"
+                    matInput
+                    [matAutocomplete]="auto"
+                    required
+                  />
+                  <mat-autocomplete
+                    autoActiveFirstOption
+                    #auto="matAutocomplete"
+                  >
+                    <mat-option
+                      *ngFor="let option of subjectFilteredOptions | async"
+                      [value]="option.name"
+                    >
+                      {{ option.name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-error
+                    *ngIf="
+                      materia.invalid &&
+                      (materia.dirty || materia.touched) &&
+                      materia.errors.required
+                    "
+                    >Por Favor seleccione una materia</mat-error
+                  >
+                  <mat-error
+                    *ngIf="
+                      materia.invalid &&
+                      (materia.dirty || materia.touched) &&
+                      materia.errors.validSubject
+                    "
+                    >Por Favor selecciona una de las materias
+                    sugeridas.</mat-error
+                  >
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Cantidad de Alumnos</mat-label>
+                  <input
+                    formControlName="cantidad"
+                    type="number"
+                    matInput
+                    name="cantidad"
+                    placeholder="Cantidad"
+                    required
+                  />
+                  <mat-error
+                    *ngIf="
+                      cantidad.invalid &&
+                      (cantidad.dirty || cantidad.touched) &&
+                      cantidad.errors.required
+                    "
+                    >Por favor indique la cantidad de estudiantes</mat-error
+                  >
+                  <mat-error
+                    *ngIf="
+                      cantidad.invalid &&
+                      (cantidad.dirty || cantidad.touched) &&
+                      cantidad.errors.min
+                    "
+                  >
+                    La cantidad de alumnos debe ser un número positivo.
+                  </mat-error>
+                  <mat-error
+                    *ngIf="
+                      cantidad.invalid &&
+                      (cantidad.dirty || cantidad.touched) &&
+                      cantidad.errors.max
+                    "
+                  >
+                    La cantidad de alumnos no debe exceder las 1000 unidades.
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="requerimientosAdicionales">
+                  <mat-label>Requisitos Adicionales</mat-label>
+                  <input
+                    formControlName="requerimientosAdicionales"
+                    matInput
+                    name="requerimientosAdicionales"
+                    placeholder="Ejemplo: Necesito un TV."
+                  />
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Tipo de Semana</mat-label>
+                  <mat-select
+                    formControlName="semanas"
+                    name="semanas"
+                    placeholder="Seleecionar tipo de semana"
+                    required
+                  >
+                    <mat-option value="especifica">Especifica</mat-option>
+                    <mat-option value="pares">Pares</mat-option>
+                    <mat-option value="impares">Impares</mat-option>
+                    <mat-option value="todas">Todas</mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      semanas.invalid &&
+                      (semanas.dirty || semanas.touched) &&
+                      semanas.errors.required
+                    "
+                    >Por favor seleccione una semana</mat-error
+                  >
+                </mat-form-field>
+                <mat-form-field *ngIf="semanas?.value == 'especifica'">
+                  <mat-label>Semana Especifica</mat-label>
+                  <mat-select
+                    matInput
+                    formControlName="semanaEspecifica"
+                    name="semanaEspecifica"
+                    placeholder="Numero de Semana"
+                  >
+                    <mat-option
+                      *ngFor="let option of weekOptions"
+                      [value]="option"
+                      >{{ option }}</mat-option
+                    >
+                  </mat-select>
+                  <mat-error
+                    *ngIf="
+                      semanaEspecifica.invalid &&
+                      (semanaEspecifica.dirty || semanaEspecifica.touched) &&
+                      semanaEspecifica.errors.requiredSpecificWeek
+                    "
+                    >Por favor seleccione una semana especifica</mat-error
+                  >
+                </mat-form-field>
+                <button
+                  mat-raised-button
+                  class="btn btn-success pull-right"
+                  type="submit"
+                >
+                  Reservar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" *ngIf="isHourTableReady">
+        <div class="card-header card-header-info">
+          <h3 class="card-title">Seleccione Horarios</h3>
+        </div>
+
+        <div class="card-content table-responsive table-full-width">
+          <mat-error *ngIf="checkCountsError" style="padding: 10px"
+            >Por favor seleccione al menos una hora</mat-error
+          >
+          <table class="table">
+            <thead class="text-center">
+              <th>Hora</th>
+              <th *ngFor="let day of weekDays">{{ day | titlecase }}</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let hour of weekOptions" class="text-center">
+                <td>{{ hour }}</td>
+                <td *ngFor="let day of weekDays">
+                  <mat-checkbox
+                    color="primary"
+                    (change)="checkDayHour(hour, day)"
+                    [checked]="isChecked(hour, day)"
+                    *ngIf="!isReservedDayHour(hour, day)"
+                  ></mat-checkbox>
+                  <p *ngIf="isReservedDayHour(hour, day)">
+                    {{ getSubject(hour, day) }}
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

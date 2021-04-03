@@ -36,7 +36,7 @@
         <div class="card">
           <div class="card-header card-header-info">
             <h3 class="card-title">
-              <a routerLink="">{{ room.name }}</a>
+              <a [routerLink]="['../rooms-details/', room.id]">{{ room.name }}</a>
             </h3>
             <h4 class="card-category">
               {{ room.id }} - {{ room.manager_id | uppercase }}
