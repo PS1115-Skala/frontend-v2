@@ -7,9 +7,10 @@ import { RequestsPageComponent } from "./pages/requests-page/requests-page.compo
 import { ComponentsModule } from "app/core/components/components.module";
 import { UserTypePipe } from './pipes/user-type.pipe';
 import { RequestStatusPipe } from './pipes/request-status.pipe';
+import { ScheduleModal } from './modals/schedule/schedule-modal.component'
 
 @NgModule({
-  declarations: [RequestsComponent, RequestsPageComponent, UserTypePipe, RequestStatusPipe],
+  declarations: [RequestsComponent, RequestsPageComponent, UserTypePipe, RequestStatusPipe, ScheduleModal],
   imports: [CommonModule, RequestsRoutingModule, ComponentsModule],
 })
 export class RequestsModule {}

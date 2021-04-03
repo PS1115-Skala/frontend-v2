@@ -6,6 +6,8 @@ import { Subject } from "rxjs";
 import { RequestsResponse } from "../../models/requests-response";
 import { RequestsResponseAdmin } from "../../models/requests-response-admin";
 import { RequestsService } from "../../services/requests.service";
+import { MatDialog } from "@angular/material/dialog";
+import { ScheduleModal } from "../../modals/schedule/schedule-modal.component";
 
 @Component({
   selector: "app-requests-page",
@@ -23,12 +25,13 @@ export class RequestsPageComponent implements OnInit {
   constructor(
     private coreService: CoreService,
     private requestsService: RequestsService,
-    private loadingBar: LoadingBarService
+    private loadingBar: LoadingBarService,
+    private dialog: MatDialog,
   ) {}
 
   initTableOption() {
     this.dtOptions = {
-      order: [[2, "desc"]],
+      order: [[1, "desc"]],
       pageLength: 10,
       language: {
         lengthMenu: "Mostrar _MENU_ registros",
@@ -75,9 +78,21 @@ export class RequestsPageComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  acceptRequest(element) {
-    // Falta implementar
-    alert("Falta implementar");
+  openScheduleDialog(element){
+    this.dialog.open(ScheduleModal, {
+      height: "650px",
+      width: "575px",
+      data: {
+        requestId: element
+      }
+    });
+  }
+
+  acceptRequest(requestId: string) {
+    this.requestsService.reservationRequestDecision(requestId, 'A').subscribe( (response) => {
+      console.log(response);
+      alert("Falta implementar");
+    })
   }
 
   openRejectionDialog(element) {

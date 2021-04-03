@@ -1,0 +1,70 @@
+<h2 mat-dialog-title class="prueba"> Horario
+  <button
+    mat-icon-button
+    style="float: right;"
+    (click)="close()"
+  >
+      <i class="material-icons">close</i>
+  </button>
+</h2>
+<mat-dialog-content>
+  <h4> {{ title }} </h4>
+  <div class="table-responsive">
+    <table
+    class="table"
+    datatable
+    [dtOptions]="dtOptions"
+    [dtTrigger]="dtTrigger"
+    class="row-border hover"
+    >
+        <thead>
+        <tr>
+            <th>Hora</th>
+            <th>Lunes</th>
+            <th>Martes</th>
+            <th>Miércoles</th>
+            <th>Jueves</th>
+            <th>Viernes</th>
+        </tr>
+        </thead> 
+        <tbody>
+        <tr *ngFor="let sch of availabilitySchedule" style="height: 5px">
+            <td style="padding: 3px !important;" class="text-center">{{ sch.hour }}</td>
+            <td style="padding: 3px !important;" [ngClass]="{'table-warning': sch.lunes === '0', 'table-info': sch.lunes === '1', 'table-danger': sch.lunes === '2'}"></td>
+            <td style="padding: 3px !important;" [ngClass]="{'table-warning': sch.martes === '0', 'table-info': sch.martes === '1', 'table-danger': sch.martes === '2'}"></td>
+            <td style="padding: 3px !important;" [ngClass]="{'table-warning': sch.miercoles === '0', 'table-info': sch.miercoles === '1', 'table-danger': sch.miercoles === '2'}"></td>
+            <td style="padding: 3px !important;" [ngClass]="{'table-warning': sch.jueves === '0', 'table-info': sch.jueves === '1', 'table-danger': sch.jueves === '2'}"></td>
+            <td style="padding: 3px !important;" [ngClass]="{'table-warning': sch.viernes === '0', 'table-info': sch.viernes === '1', 'table-danger': sch.viernes === '2'}"></td>
+        </tr>
+        </tbody>
+    </table>
+  </div>
+  <br>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" value="" disabled>
+      Por reservar
+      <span class="form-check-sign">
+        <span class="check" style="background: #b8ecf3;"></span>
+      </span>
+    </label>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" value="" disabled>
+      Ocupadas
+      <span class="form-check-sign">
+        <span class="check" style="background: #fff9c8;"></span>
+      </span>
+    </label>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" value="" disabled>
+      Ya Ocupada
+      <span class="form-check-sign">
+        <span class="check" style="background: #fccac7;"></span>
+      </span>
+    </label>
+  </div>
+</mat-dialog-content>

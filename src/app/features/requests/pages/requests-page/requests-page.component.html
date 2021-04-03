@@ -8,7 +8,9 @@
     <hr />
     <div class="card mt-5">
       <div class="card-header card-header-info">
-        <h4 class="card-title" style="height: 40px"></h4>
+        <h3 class="card-title">
+          Historial
+        </h3>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -45,7 +47,14 @@
                   <td>{{ request.room_id }}</td>
                   <td>{{ request.material_needed }}</td>
                   <td>{{ request.quantity }}</td>
-                  <td>Falta horario</td>
+                  <td>
+                    <button 
+                      mat-icon-button
+                      (click)="openScheduleDialog(request.id)"
+                    >
+                      <i class="material-icons">visibility</i>
+                    </button>
+                  </td>
                   <td>
                     <button
                       type="button"
@@ -87,21 +96,26 @@
                   <td>{{ request.room_id }}</td>
                   <td>{{ request.material_needed }}</td>
                   <td>{{ request.quantity }}</td>
-                  <td>Falta horario</td>
+                  <td>
+                    <button 
+                      mat-icon-button
+                      (click)="openScheduleDialog(request.id)"
+                    >
+                      <i class="material-icons">visibility</i>
+                    </button>
+                  </td>
                   <td>{{ request.status | requestStatus }}</td>
                   <td>
                     <div *ngIf="request.status != 'P'">
                       No se puede eliminar
                     </div>
                     <button
-                      mat-flat-button
+                      mat-icon-button
                       (click)="deletedRequest(request.id)"
                       [disabled]="actionsDisabled"
                       *ngIf="request.status == 'P'"
                     >
-                      <div>
                         <i class="material-icons">close</i>
-                      </div>
                     </button>
                   </td>
                 </tr>
