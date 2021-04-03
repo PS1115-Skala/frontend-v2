@@ -1,0 +1,101 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <h2>Detalles de Sala</h2>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="card" *ngIf="room">
+        <div class="card-header card-header-info">
+          <h3 class="card-title">{{ room.name }}</h3>
+          <h4 class="card-category">
+            {{ room.id }}
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 col-sm-12">
+              <img
+                src="{{ picture }}"
+                alt="Imagen de la Sala"
+                class="img-sala"
+                height="300"
+              />
+            </div>
+            <div class="col-md-8 col-sm-12">
+              <div>
+                <b> Descripción: </b>
+                {{ room.description }}
+              </div>
+              <br />
+              <div>
+                <b> Perteneciente al laboratorio: </b>
+                <a href="javascript:void(0)"> {{ room.manager_id }}</a>
+              </div>
+              <div id="bottom">
+                <b> Acciones: </b>
+                <div class="row">
+                  <div class="col-6">
+                    <button
+                      type="button"
+                      class="btn btn-warning btn-lg btn-block btn-description"
+                      routerLink="/horario/{{ room?.id }}"
+                    >
+                      Horarios
+                    </button>
+                  </div>
+
+                  <div class="col-6">
+                    <button
+                      type="button"
+                      class="btn btn-info btn-lg btn-block btn-description"
+                      [routerLink]="['../../room-reservation/', roomId]"
+                    >
+                      Reservar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card" *ngIf="items">
+        <div class="card-header card-header-info">
+          <h3 class="card-title">Componentes</h3>
+          <h4 class="card-category">Objetos que posee la sala</h4>
+        </div>
+        <div
+          class="card-body table-responsive table-full-width"
+          *ngIf="items.length != 0"
+        >
+          <table class="table">
+            <thead>
+              <th scope="col" style="width: 25%">Item</th>
+              <th class="text-center" scope="col" style="width: 25%">
+                Cantidad
+              </th>
+              <th class="text-center" scope="col" style="width: 50%">
+                Descripción
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of items">
+                <td class="text-capitalize">{{ item.name }}</td>
+                <td class="text-center text-capitalize">{{ item.quantity }}</td>
+                <td class="text-center text-capitalize">
+                  {{ item.description }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-body" *ngIf="items.length == 0">
+          <p>Esta sala no tiene componentes registrados en el sistema.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
