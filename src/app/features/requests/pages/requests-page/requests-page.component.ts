@@ -1,26 +1,34 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
 import { LoadingBarService } from "@ngx-loading-bar/core";
 import { USER_TYPE } from "app/core/constants/userType";
 import { CoreService } from "app/core/services/core.service";
 import { Subject } from "rxjs";
 import { RequestsResponse } from "../../models/requests-response";
 import { RequestsResponseAdmin } from "../../models/requests-response-admin";
+import { RejectionData } from '../../models/rejection-data';
 import { RequestsService } from "../../services/requests.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ScheduleModal } from "../../modals/schedule/schedule-modal.component";
+import { ViewReasonModal } from '../../modals/rejected/view-reason.component';
+import { RejectionModal } from '../../modals/rejected/rejection-modal.component';
+import { DataTableDirective } from 'angular-datatables';
+declare var $: any;
 
 @Component({
   selector: "app-requests-page",
   templateUrl: "./requests-page.component.html",
   styleUrls: ["./requests-page.component.css"],
 })
-export class RequestsPageComponent implements OnInit {
+export class RequestsPageComponent implements OnDestroy, OnInit {
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
   isAdmin: boolean;
   requests: RequestsResponse[];
   requestsAdmin: RequestsResponseAdmin[];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   isLoading: boolean;
+  
 
   constructor(
     private coreService: CoreService,
@@ -76,32 +84,103 @@ export class RequestsPageComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+    this.dialog.closeAll();
   }
 
-  openScheduleDialog(element){
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.ngOnInit();
+    });
+  }
+
+  openScheduleDialog(requestId: string){
     this.dialog.open(ScheduleModal, {
       height: "650px",
       width: "575px",
       data: {
-        requestId: element
+        requestId: requestId
       }
     });
   }
 
   acceptRequest(requestId: string) {
     this.requestsService.reservationRequestDecision(requestId, 'A').subscribe( (response) => {
-      console.log(response);
-      alert("Falta implementar");
+      $.notify(
+        {
+          icon: "check",
+          message: response.message,
+        },
+        {
+          type: "success",
+          timer: 5000,
+          placement: {
+            from: "top",
+            align: "right",
+          },
+        }
+      );
+      this.rerender();
     })
   }
 
-  openRejectionDialog(element) {
-    // Falta implementar
-    alert("Falta implementar");
+  viewRejectedReason(reason: string){
+    this.dialog.open(ViewReasonModal, {
+      width: "400px",
+      data: {
+        reason: reason
+      }
+    });
   }
 
-  deletedRequest(elementId) {
-    // Falta implementar
-    alert("Falta implementar");
+  openRejectionDialog(requestId: string) {
+    const rejectionData: RejectionData = {
+      reason: '',
+    };
+    const dialogRef = this.dialog.open(RejectionModal, {
+      width: "300px",
+      data: rejectionData
+    });
+    dialogRef.afterClosed().subscribe( rejection => {
+      if (rejection){ 
+        this.requestsService.reservationRequestDecision(requestId, 'R', rejectionData.reason).subscribe( (response) => {
+          $.notify(
+            {
+              icon: "check",
+              message: response.message,
+            },
+            {
+              type: "success",
+              timer: 5000,
+              placement: {
+                from: "top",
+                align: "right",
+              },
+            }
+          );
+          this.rerender();
+        })
+      }
+    });
+  }
+
+  deletedRequest(requestId: string) {
+    this.requestsService.deleteRequest(requestId).subscribe( response => {
+      $.notify(
+        {
+          icon: "check",
+          message: response.message,
+        },
+        {
+          type: "success",
+          timer: 5000,
+          placement: {
+            from: "top",
+            align: "right",
+          },
+        }
+      );
+      this.rerender();
+    });
   }
 }

@@ -86,7 +86,7 @@
                   <th>Capacidad</th>
                   <th>Horario</th>
                   <th>Estado</th>
-                  <th>Eliminar</th>
+                  <th>Acción</th>
                 </tr>
               </thead>
               <tbody>
@@ -106,9 +106,16 @@
                   </td>
                   <td>{{ request.status | requestStatus }}</td>
                   <td>
-                    <div *ngIf="request.status != 'P'">
+                    <div *ngIf="request.status == 'A'">
                       No se puede eliminar
                     </div>
+                    <button 
+                      mat-flat-button
+                      (click)="viewRejectedReason(request.reason)"
+                      *ngIf="request.status == 'R'"
+                    >
+                      Ver Motivo
+                    </button>
                     <button
                       mat-icon-button
                       (click)="deletedRequest(request.id)"
