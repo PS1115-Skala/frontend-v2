@@ -106,20 +106,7 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
 
   acceptRequest(requestId: string) {
     this.requestsService.reservationRequestDecision(requestId, 'A').subscribe( (response) => {
-      $.notify(
-        {
-          icon: "check",
-          message: response.message,
-        },
-        {
-          type: "success",
-          timer: 5000,
-          placement: {
-            from: "top",
-            align: "right",
-          },
-        }
-      );
+      this.successNotify(response.message);
       this.rerender();
     })
   }
@@ -144,20 +131,7 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
     dialogRef.afterClosed().subscribe( rejection => {
       if (rejection){ 
         this.requestsService.reservationRequestDecision(requestId, 'R', rejectionData.reason).subscribe( (response) => {
-          $.notify(
-            {
-              icon: "check",
-              message: response.message,
-            },
-            {
-              type: "success",
-              timer: 5000,
-              placement: {
-                from: "top",
-                align: "right",
-              },
-            }
-          );
+          this.successNotify(response.message);
           this.rerender();
         })
       }
@@ -166,21 +140,25 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
 
   deletedRequest(requestId: string) {
     this.requestsService.deleteRequest(requestId).subscribe( response => {
-      $.notify(
-        {
-          icon: "check",
-          message: response.message,
-        },
-        {
-          type: "success",
-          timer: 5000,
-          placement: {
-            from: "top",
-            align: "right",
-          },
-        }
-      );
+      this.successNotify(response.message);
       this.rerender();
     });
+  }
+
+  successNotify(message) {
+    $.notify(
+      {
+        icon: "check",
+        message: message,
+      },
+      {
+        type: "success",
+        timer: 5000,
+        placement: {
+          from: "top",
+          align: "right",
+        },
+      }
+    );
   }
 }
