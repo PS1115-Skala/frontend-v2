@@ -116,7 +116,5 @@ const getTypesWeek = (typeWeek) => {
     if (parseInt(typeWeek)) {
         return { typeWeek: typeWeek, title: `Semana Especifica: ${typeWeek}` }
     }
-    return { typeWeek, title: `Semanas: ${capitalizeFirstLetter(typeWeek)}` }
+    return { typeWeek, title: `Semanas: ${typeWeek}` }
 }
-
-const capitalizeFirstLetter = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);

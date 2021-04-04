@@ -1,4 +1,4 @@
-<h2 mat-dialog-title class="prueba"> Horario
+<h2 mat-dialog-title> Horario
   <button
     mat-icon-button
     style="float: right;"
@@ -8,7 +8,7 @@
   </button>
 </h2>
 <mat-dialog-content>
-  <h4> {{ title }} </h4>
+  <h4> {{ title | titlecase }} </h4>
   <div class="table-responsive">
     <table
     class="table"

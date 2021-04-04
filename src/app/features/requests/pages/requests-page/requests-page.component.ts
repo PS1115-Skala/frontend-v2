@@ -28,7 +28,7 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   isLoading: boolean;
-  
+  isTableReady: boolean = false;
 
   constructor(
     private coreService: CoreService,
@@ -80,6 +80,7 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
         this.dtTrigger.next();
       });
     }
+    this.isTableReady = true;
   }
 
   ngOnDestroy(): void {
@@ -96,8 +97,6 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
 
   openScheduleDialog(requestId: string){
     this.dialog.open(ScheduleModal, {
-      height: "650px",
-      width: "575px",
       data: {
         requestId: requestId
       }
@@ -106,6 +105,7 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
 
   acceptRequest(requestId: string) {
     this.requestsService.reservationRequestDecision(requestId, 'A').subscribe( (response) => {
+      this.isTableReady = false;
       this.successNotify(response.message);
       this.rerender();
     })
@@ -131,6 +131,7 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
     dialogRef.afterClosed().subscribe( rejection => {
       if (rejection){ 
         this.requestsService.reservationRequestDecision(requestId, 'R', rejectionData.reason).subscribe( (response) => {
+          this.isTableReady = false;
           this.successNotify(response.message);
           this.rerender();
         })
@@ -140,6 +141,7 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
 
   deletedRequest(requestId: string) {
     this.requestsService.deleteRequest(requestId).subscribe( response => {
+      this.isTableReady = false;
       this.successNotify(response.message);
       this.rerender();
     });
