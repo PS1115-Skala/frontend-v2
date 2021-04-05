@@ -5,6 +5,8 @@ import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { RequestsResponse } from "../models/requests-response";
 import { RequestsResponseAdmin } from "../models/requests-response-admin";
+import { ScheduleResponse, ScheduleAsignation } from "../models/schedule-response";
+import { SuccessMessage } from "../../../core/models/message"
 
 const API = environment.api_url;
 
@@ -50,6 +52,54 @@ export class RequestsService {
     const url = `${API}/solicitudes/usuario/${userId}/`;
     return this.http
       .get<RequestsResponse[]>(url)
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Servicio para consultar el horario correspondiente a una reserva.
+   * @param {string} requestId Id de Usuario a consultar salas
+   * @returns {ScheduleResponse} Objeto con informacion y la lista de horarios correspondiente a un requestId
+   */
+  getScheduleRequest(requestId: string): Observable<ScheduleResponse> {
+    const url = `${API}/solicitudes/${requestId}/horario`;
+    return this.http
+      .get<ScheduleResponse>(url)
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Servicio para consultar el horario correspondiente a una sala
+   * @param {string} room Sala de la que se reunirá 
+   * @param {string} typeWeek Tipo de semana a consultar
+   * @returns {ScheduleAsignation} Lista de horario correspondiente a una sala
+   */
+  getSchedule(room: string, typeWeek: string): Observable<ScheduleAsignation[]> {
+    const url = `${API}/reservas/${room}/semana/${typeWeek}`;
+    return this.http
+      .get<ScheduleAsignation[]>(url)
+      .pipe(catchError(this.handleError));
+  }
+
+  /** A través de este servicio se aprueba/rechaza una solicitud de reserva
+   * @param {string} requestId Reserva que se aprobará/rechazará 
+   * @param {string} decision Decisión tomada (aprobada o rechazada)
+   * @param {string} reason Razón de rechazo (en caso de rechazo)
+   * @returns {SuccessMessage} Mensaje satisfactorio
+   */
+  reservationRequestDecision(requestId: string, decision: string, reason=''): Observable<SuccessMessage> {
+    const url = `${API}/solicitudes/reserva/${requestId}`;
+    const putData = { reason, status: decision };
+    return this.http
+      .put<SuccessMessage>(url, putData)
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Se elimina una solicitud de reserva en estado Pendiente
+   * @param {string} requestId Reserva que se eliminará
+   * @returns {SuccessMessage} Mensaje satisfactorio
+   */
+  deleteRequest(requestId: string): Observable<SuccessMessage> {
+    const url = `${API}/eliminar/solicitud/reserva/${requestId}`;
+    return this.http
+      .delete<SuccessMessage>(url)
       .pipe(catchError(this.handleError));
   }
 }

@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Confirmar Rechazo
+    <button
+      mat-icon-button
+      (click)="close()"
+      style="float: right;"
+    >
+        <i class="material-icons">close</i>
+    </button>
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="rejectionForm" (ngSubmit)="onSubmit()">
+  <p>Especifique una razón para su rechazo</p>
+  <mat-form-field>
+    <mat-label>Razón de rechazo</mat-label>
+    <input formControlName="reason" type="text" placeholder="Razón" aria-label="Razón" matInput required>
+  </mat-form-field>
+    <mat-error *ngIf="reason.invalid && reason.touched && reason.errors?.required">
+        Razón de rechazo es requerido.
+    </mat-error>
+  <button style="float: right;" mat-raised-button color="warn" type="submit">Rechazar</button>
+  </form>
+</mat-dialog-content>
