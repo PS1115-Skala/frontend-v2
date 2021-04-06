@@ -31,7 +31,7 @@ El proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cl
 
 Para generar un modulo: `ng generate module features/<tu_feature> --routing`
 
-Para generar un componente dentro del modulo: `ng generate module features/<tu_feature>/pages/<tu_componente> --module=<tu_feature>.module`
+Para generar un componente dentro del modulo: `ng generate component features/<tu_feature>/pages/<tu_componente> --module=<tu_feature>.module`
 
 Para generar un servicio dentro del modulo: `ng generate service features/<tu_feature>/services/<tu_servicio>`
 

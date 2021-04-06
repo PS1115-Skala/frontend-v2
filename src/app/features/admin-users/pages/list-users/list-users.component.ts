@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs-compat';
 import { AdminUsersService } from '../../services/admin-users.service';
@@ -8,9 +9,8 @@ import { AdminUsersService } from '../../services/admin-users.service';
   templateUrl: './list-users.component.html',
   styleUrls: ['./list-users.component.css']
 })
-export class ListUsersComponent implements OnInit, OnDestroy {
+export class ListUsersComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(DataTableDirective, {static: false})
-  //form: FormGroup;
   tiposUsuarios: any[];
   isLoading: boolean;
   isTableReady: boolean;
@@ -24,11 +24,12 @@ export class ListUsersComponent implements OnInit, OnDestroy {
     private usersService: AdminUsersService,
     //private loadingBar: LoadingBarService,
     //private dialog: MatDialog,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.isLoading = false;
-    this.isTableReady = false;
+    this.isTableReady = true;
     this.initTableOption();
     this.cargarUsuarios(undefined);
   }
@@ -38,9 +39,13 @@ export class ListUsersComponent implements OnInit, OnDestroy {
     //this.dialog.closeAll();
   }
 
+  ngAfterViewInit() {
+    this.isTableReady = true;
+  }
+
   initTableOption() {
     this.dtOptions = {
-      order: [[1, "id"]],
+      //order: [['1111', "type"]],
       pageLength: 10,
       language: {
         lengthMenu: "Mostrar _MENU_ registros",
@@ -71,9 +76,9 @@ export class ListUsersComponent implements OnInit, OnDestroy {
     tipoUsuario = tipoUsuario != 'todos' ? tipoUsuario : undefined;
     this.usersService.getUsers(tipoUsuario)
     .finally( () => {
+      this.isLoading = false;
       this.isTableReady = true;
       this.dtTrigger.next();
-      this.isLoading = false;
     })
     .subscribe( response => {
       this.dataSource = response;
@@ -89,6 +94,10 @@ export class ListUsersComponent implements OnInit, OnDestroy {
     else if (tipo == '4444') { valor = 'Lab F'}
     else { console.warn('Tipo No definido'); }
     return valor;
+  }
+
+  crearModificarUsuario(idUsuario?: string) {
+    this.router.navigate(['admin-users/user/', idUsuario ? idUsuario : 'crear']);
   }
 
 }
