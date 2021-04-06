@@ -6,6 +6,57 @@
       </div>
     </div>
     <hr />
-    <div class="row"></div>
+    <div class="card mt-5">
+      <div class="card-header card-header-info">
+        <h3 class="card-title"></h3>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive" *ngIf="isTableReady">
+          <table
+            class="table"
+            datatable
+            [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger"
+            class="row-border hover"
+          >
+          
+          <thead>
+            <tr *ngIf="!isLoading">
+              <th> User </th>
+              <th> Nombre </th>
+              <th> Correo </th>
+              <th> Tipo </th>
+              <th> Estatus </th>
+              <th> </th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let element of dataSource">
+
+              <td> {{element.id}} </td>
+              <td> {{element.name}} </td>
+              <td> {{element.email}} </td>
+              <td> {{mapTipo(element.type)}} </td>
+              <td> {{element.is_active ? 'Activo' : 'Inactivo'}} </td>
+              <td>
+                <button mat-flat-button  (click)="crearModificarUsuario(element.id)" 
+                [disabled]="element.modifiedDisabled">
+                  <!-- <mat-icon>edit</mat-icon> -->
+                </button>
+              </td>
+              <td>
+                <button mat-flat-button  (click)="deletedUser(element.id)" 
+                [disabled]="element.deleteDisabled">
+                  <!-- <mat-icon>delete</mat-icon> -->
+                </button>
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
   </div>
 </div>
