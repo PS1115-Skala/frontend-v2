@@ -1,7 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
+import { TIPO_USUARIO } from 'app/core/constants/userType';
 import { AdminUsersService } from '../../services/admin-users.service';
 declare var $: any;
 
@@ -24,7 +26,6 @@ export class DetailUserComponent implements OnInit {
     private location: Location,
     private formBuilder: FormBuilder,
     private usersService: AdminUsersService,
-    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -51,16 +52,8 @@ export class DetailUserComponent implements OnInit {
   /** Cargar estatus de momento estaticos */
   cargaEstatus() { this.estatus = [ {id: 1, name: 'Activo'}, {id: 0, name: 'Inactivo'}, ]; }
 
-  /** Cargar Tipo Usuario de momento estatico */
-  cargaTiposUsuarios() {
-    this.tiposUsuarios = [
-      {id: 0, name: 'Departamento'},
-      {id: 1111, name: 'Estudiante'},
-      {id: 2222, name: 'Profesor'},
-      {id: 3333, name: 'Admin Lab'},
-      {id: 4444, name: 'Lab F'},
-    ];
-  }
+  /** Cargar Tipo Usuario constante global */
+  cargaTiposUsuarios() { this.tiposUsuarios = Object.entries(TIPO_USUARIO); }
 
   cargarOptions() {
     this.options = [ {id: true, name: 'Si'}, {id: false, name: 'No'} ];
@@ -85,36 +78,55 @@ export class DetailUserComponent implements OnInit {
 
   guardar(values) {
     if (this.id == undefined) { // crear
-      this.usersService.createUser(values.id, values.name, values.email, values.type)
-      .finally( () => { this.router.navigate(['/usuarios/']); })
+      const usuario = {usbId: values.id, userName: values.name, userEmail: values.email, userType: values.type};
+      this.usersService.createUser(usuario)
       .subscribe( response => {
         this.successNotification(response.message);
         this.regresar();
+      }, error => { 
+        this.errorNotification(error.error.error);
       });
     }
     else { // actualizar
       let updValues = {...values};
       const filtrados = Object.entries(updValues);
       filtrados.forEach( v => { 
-        if (this.camposModificados.includes(v[0]) == false) {
-          updValues[v[0]] = null;
-        }
+        if (this.camposModificados.includes(v[0]) == false) { updValues[v[0]] = undefined;}
       })
-      this.usersService.updateUser(this.id, updValues.name, updValues.email, updValues.type, 
-      updValues.verificado, updValues.activo, updValues.chief)
+      updValues['is_active'] = updValues.activo;
+      updValues.activo = undefined;
+      updValues['is_verified'] = updValues.verificado;
+      updValues.verificado = undefined;
+      this.usersService.updateUser(this.id, updValues)
       .subscribe( response => {
         this.successNotification(response.message);
+      }, error => { 
+        this.errorNotification(error.error.error);
       });
     }
   }
 
   regresar() { this.location.back(); }
 
-  successNotification(message) {
+  successNotification(message: string) {
     $.notify(
       { icon: "check", message: message,},
       {
         type: "success",
+        timer: 5000,
+        placement: {
+          from: "top",
+          align: "right",
+        },
+      }
+    );
+  }
+
+  errorNotification(message: string) {
+    $.notify(
+      { icon: "error_outline", message: message },
+      {
+        type: "danger",
         timer: 5000,
         placement: {
           from: "top",

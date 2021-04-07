@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
+import { TIPO_USUARIO } from 'app/core/constants/userType';
 import { Subject } from 'rxjs-compat';
 import { AdminUsersService } from '../../services/admin-users.service';
 
@@ -86,14 +87,7 @@ export class ListUsersComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   mapTipo(tipo: string): string {
-    let valor = '';
-    if (tipo == '0') { valor = 'Departamento'}
-    else if (tipo == '1111') { valor = 'Estudiante'}
-    else if (tipo == '2222') { valor = 'Profesor'}
-    else if (tipo == '3333') { valor = 'Admin Lab'}
-    else if (tipo == '4444') { valor = 'Lab F'}
-    else { console.warn('Tipo No definido'); }
-    return valor;
+    return TIPO_USUARIO[+tipo];
   }
 
   crearModificarUsuario(idUsuario?: string) {

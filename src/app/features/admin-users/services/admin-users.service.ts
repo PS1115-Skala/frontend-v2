@@ -57,53 +57,22 @@ export class AdminUsersService {
   
     /** Crear Usuario desde pantalla de usuarios
      *
-     * @param {string} usbId
-     * @param {string} userName
-     * @param {string} userEmail
-     * @param {number } userType
+     * @param {usbId: string, userName: string, userEmail: string, userType: number} usuarioBasico
      */
-    createUser(
-      usbId: string,
-      userName: string,
-      userEmail: string,
-      userType: number
+    createUser(usuarioBasico: { usbId: string, userName: string, userEmail: string, userType: number }
     ): Observable<any> {
-      let body = {
-        usbId: usbId,
-        userName: userName,
-        userEmail: userEmail,
-        userType: userType,
-      };
-      return this.http.post<any>(API + "/usuario/create", body);
+      return this.http.post<any>(API + "/usuario/create", usuarioBasico);
     }
   
     /** Actualizar los campos que se toquen de usuario
      *
      * @param id
-     * @param name
-     * @param email
-     * @param type
-     * @param is_verified
-     * @param is_active
-     * @param chief
+     * @param {{name: string, email: string, type: number, is_verified: boolean, is_active: number, chief: string }} user
      */
-    updateUser(
+    updateUser( 
       id: string,
-      name: string,
-      email: string,
-      type: number,
-      is_verified: boolean,
-      is_active: number,
-      chief: string
+      user: { name: string, email: string, type: number, is_verified: boolean, is_active: number, chief: string }
     ): Observable<any> {
-      let body = {
-        name: name != null ? name : undefined,
-        email: email != null ? email : undefined,
-        type: type != null ? type : undefined,
-        is_verified: is_verified != null ? is_verified : undefined,
-        is_active: is_active != null ? is_active : undefined,
-        chief: chief != null ? chief : undefined,
-      };
-      return this.http.put<any>(API + `/usuario/update/${id}`, body);
+      return this.http.put<any>(API + `/usuario/update/${id}`, user);
     }
 }
