@@ -9,7 +9,10 @@ export class ListLaboratoriesPageComponent implements OnInit {
 
   constructor() { }
 
+  laboratorios: any[];
   ngOnInit(): void {
+    this.laboratorios = [1,2,3,4,5];
+    console.log(this.laboratorios);
   }
 
 }

@@ -6,6 +6,30 @@
       </div>
     </div>
     <hr />
-    <div class="row"></div>
+    <div class="row" style="justify-content: center; margin-top: 2rem;">      
+      <mat-accordion style="width: 45%;">
+        <mat-expansion-panel style="margin: 20px 0;" *ngFor="let laboratorio of laboratorios; let index = index">
+          <mat-expansion-panel-header class="color-blue">
+              Laboratorio {{index + 1}}
+          </mat-expansion-panel-header>
+          <div class="row border-top" *ngFor="let laboratorio of laboratorios; let index = index">
+            <div class="col-6 content-element-inside">
+              <span style="font-size: 18px;">Sala {{index + 1}}</span>
+            </div>
+            <div class="col-6 content-element-inside">
+              <a
+                button
+                mat-raised-button
+                class="btn btn-warning btn-block h-75"
+                style="width: auto;"
+                routerLink="/dashboard/"
+              >
+                Ir a la sala
+              </a>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
   </div>
 </div>
