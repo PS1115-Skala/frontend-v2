@@ -34,38 +34,39 @@
                 <b> Perteneciente al laboratorio: </b>
                 <a href="javascript:void(0)"> {{ room.manager_id }}</a>
               </div>
-              <div id="bottom">
-                <b> Acciones: </b>
-                <div class="row">
-                  <div class="col-md-4 col-sm-12">
-                    <button
-                      type="button"
-                      class="btn btn-warning btn-lg btn-block btn-description"
-                      routerLink="/horario/{{ room?.id }}"
-                    >
-                      Horarios
-                    </button>
-                  </div>
+              <div id="bottom"></div>
+              <div id="bottom" class="row">
+                <div class="col-md-4 col-sm-12">
+                  <b> Acciones: </b>
+                  <button
+                    type="button"
+                    class="btn btn-warning btn-lg btn-block btn-description"
+                    routerLink="/horario/{{ room?.id }}"
+                  >
+                    Horarios
+                  </button>
+                </div>
 
-                  <div class="col-md-4 col-sm-12">
-                    <button
-                      type="button"
-                      class="btn btn-info btn-lg btn-block btn-description"
-                      [routerLink]="['../../room-reservation/', roomId]"
-                    >
-                      Reservar
-                    </button>
-                  </div>
+                <div class="col-md-4 col-sm-12">
+                  <br />
+                  <button
+                    type="button"
+                    class="btn btn-info btn-lg btn-block btn-description"
+                    [routerLink]="['../../room-reservation/', roomId]"
+                  >
+                    Reservar
+                  </button>
+                </div>
 
-                  <div class="col-md-4 col-sm-12" *ngIf="isLabAdmin">
-                    <button
-                      type="button"
-                      class="btn btn-info btn-lg btn-block btn-description"
-                      [routerLink]="['../../rooms-admin/', roomId]"
-                    >
-                      Editar Sala
-                    </button>
-                  </div>
+                <div class="col-md-4 col-sm-12" *ngIf="isLabAdmin">
+                  <br />
+                  <button
+                    type="button"
+                    class="btn btn-info btn-lg btn-block btn-description"
+                    [routerLink]="['../../rooms-admin/', roomId]"
+                  >
+                    Editar Sala
+                  </button>
                 </div>
               </div>
             </div>
