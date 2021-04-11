@@ -36,12 +36,7 @@ export class MetricsService {
     return this.http.get<Trimester[]>(url).pipe(catchError(this.handleError));
   }
 
-  getMetrics(
-    labFilter?: any,
-    initTrim?: any,
-    endTrim?: any
-  ): Observable<MetricsResponse> {
-    const url = `${API}/metrics/reservas/`;
+  getMetricsParams(labFilter?: any, initTrim?: any, endTrim?: any) {
     let params = {};
     if (labFilter && labFilter.id) {
       params["labFilter"] = labFilter.id;
@@ -52,6 +47,30 @@ export class MetricsService {
     if (endTrim) {
       params["endTrim"] = endTrim.id;
     }
+    return params;
+  }
+
+  getMetrics(
+    labFilter?: any,
+    initTrim?: any,
+    endTrim?: any
+  ): Observable<MetricsResponse> {
+    const url = `${API}/metrics/reservas/`;
+    let params = this.getMetricsParams(labFilter, initTrim, endTrim);
+    return this.http
+      .get<MetricsResponse>(url, {
+        params: params,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getMetricsCSV(
+    labFilter?: any,
+    initTrim?: any,
+    endTrim?: any
+  ): Observable<MetricsResponse> {
+    const url = `${API}/metrics/reservas/csv/`;
+    let params = this.getMetricsParams(labFilter, initTrim, endTrim);
     return this.http
       .get<MetricsResponse>(url, {
         params: params,

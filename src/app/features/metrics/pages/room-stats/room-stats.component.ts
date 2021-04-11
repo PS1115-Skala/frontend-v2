@@ -1,3 +1,4 @@
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 import { Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import { DataTableDirective } from "angular-datatables";
 import { LaboratoriesService } from "app/features/laboratories/services/laboratories.service";
@@ -116,6 +117,7 @@ export class RoomStatsComponent implements OnInit {
         this.rerenderTables();
         if (this.metricsResponse) {
           this.initCardsMetrics();
+          this.initAllCharts();
         }
       });
   }
@@ -144,6 +146,8 @@ export class RoomStatsComponent implements OnInit {
 
   initAllCharts() {
     this.initApprovedVsRejected();
+    this.initCareersChart();
+    this.initStudentsChart();
   }
 
   changeFilterBy(indexFilter) {
@@ -225,6 +229,26 @@ export class RoomStatsComponent implements OnInit {
     this.createBarChart(labels, series, "#approvedVsRejected");
   }
 
+  initCareersChart() {
+    let labels = ["C. Largas", "C. Cortas", "Postgrado"];
+    let series = [
+      this.metricsResponse.careers.undergraduateLarge.count,
+      this.metricsResponse.careers.undergraduateShort.count,
+      this.metricsResponse.careers.postgraduate.count,
+    ];
+    this.createBarChart(labels, series, "#careersChart");
+  }
+
+  initStudentsChart() {
+    let labels = ["C. Largas", "C. Cortas", "Postgrado"];
+    let series = [
+      this.metricsResponse.careers.undergraduateLarge.totalStudents,
+      this.metricsResponse.careers.undergraduateShort.totalStudents,
+      this.metricsResponse.careers.postgraduate.totalStudents,
+    ];
+    this.createBarChart(labels, series, "#studentsChart");
+  }
+
   initCardsMetrics() {
     this.cardsMetrics = [];
     let totalStudents = {
@@ -291,10 +315,19 @@ export class RoomStatsComponent implements OnInit {
     );
   }
 
-  ngAfterViewChecked() {
-    if (this.metricsResponse) {
-      this.initAllCharts();
-    }
+  getMetricsCSV() {
+    this.metricsService
+      .getMetricsCSV(
+        this.selectedRoom,
+        this.selectedBeginTerm,
+        this.selectedEndTerm
+      )
+      .subscribe(
+        () => {},
+        (error) => {
+          this.showValidationError("Error al obtener el csv de estadisticas");
+        }
+      );
   }
 
   ngOnInit() {
