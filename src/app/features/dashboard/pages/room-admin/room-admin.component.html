@@ -1,0 +1,249 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <h2>Editar Sala</h2>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="card" *ngIf="room">
+        <div class="card-header card-header-info">
+          <h3 class="card-title">{{ room.name }}</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-4 col-sm-12">
+                <img
+                  [src]="croppedImg || picture"
+                  alt="Imagen de la Sala"
+                  class="img-sala"
+                  height="300"
+                />
+                <button
+                  mat-raised-button
+                  (click)="openChangeImageDialog()"
+                  class="btn btn-info"
+                  type="button"
+                >
+                  Cambiar Imagen
+                </button>
+              </div>
+              <div class="col-md-8 col-sm-12" *ngIf="roomForm">
+                <h3>Información de la Sala</h3>
+                <mat-form-field>
+                  <mat-label>Nombre de la Sala</mat-label>
+                  <input
+                    formControlName="name"
+                    type="text"
+                    placeholder="Nombre"
+                    matInput
+                    required
+                  />
+                  <mat-error
+                    *ngIf="
+                      name.invalid &&
+                      (name.dirty || name.touched) &&
+                      name.errors.required
+                    "
+                    >Por Favor indique el nombre de la sala</mat-error
+                  >
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Descripción de la Sala</mat-label>
+                  <textarea
+                    formControlName="description"
+                    placeholder="Description"
+                    matInput
+                    required
+                  >
+                  </textarea>
+                  <mat-error
+                    *ngIf="
+                      description.invalid &&
+                      (description.dirty || description.touched) &&
+                      description.errors.required
+                    "
+                    >Por Favor indique la descripción de la sala</mat-error
+                  >
+                </mat-form-field>
+                <mat-checkbox formControlName="isActive" color="primary"
+                  >¿Sala Activa?</mat-checkbox
+                >
+              </div>
+              <div class="col-12">
+                <div class="card-header card-header-info mt-5">
+                  <h3 class="card-title">Componentes</h3>
+                </div>
+                <div
+                  class="card-body table-responsive table-full-width"
+                  *ngIf="
+                    editItems.controls.length != 0 ||
+                    newItems.controls.length != 0
+                  "
+                >
+                  <div class="mt-1">
+                    <button
+                      mat-raised-button
+                      class="btn btn-success pull-right"
+                      (click)="addNewItemFormGroup()"
+                      type="button"
+                    >
+                      Agregar Item
+                    </button>
+                  </div>
+                  <table class="table">
+                    <thead>
+                      <th scope="col" style="width: 25%">Item</th>
+                      <th class="text-center" scope="col" style="width: 25%">
+                        Cantidad
+                      </th>
+                      <th class="text-center" scope="col" style="width: 50%">
+                        Descripción
+                      </th>
+                      <th>Eliminar</th>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let items of editItems.controls; let i = index"
+                        formArrayName="editItems"
+                      >
+                        <td [formGroupName]="i">
+                          <mat-form-field>
+                            <input
+                              placeholder="Item"
+                              matInput
+                              formControlName="name"
+                            />
+                          </mat-form-field>
+                        </td>
+                        <td [formGroupName]="i">
+                          <mat-form-field>
+                            <input
+                              type="number"
+                              placeholder="Cantidad"
+                              matInput
+                              formControlName="quantity"
+                              required
+                            />
+                          </mat-form-field>
+                        </td>
+                        <td [formGroupName]="i">
+                          <mat-form-field>
+                            <mat-label>Descripcion</mat-label>
+                            <input
+                              placeholder="Item"
+                              matInput
+                              formControlName="description"
+                            />
+                          </mat-form-field>
+                        </td>
+                        <td>
+                          <button
+                            mat-icon-button
+                            (click)="removeEditItemFormGroup(i)"
+                            type="button"
+                          >
+                            <i class="material-icons">close</i>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr
+                        *ngFor="let items of newItems.controls; let i = index"
+                        formArrayName="newItems"
+                      >
+                        <td [formGroupName]="i">
+                          <mat-form-field appearance="fill">
+                            <mat-label>Item</mat-label>
+                            <mat-select formControlName="id">
+                              <mat-option
+                                *ngFor="let itemOption of itemsToBeAdded"
+                                value="{{ itemOption.id }}"
+                                (click)="
+                                  updateItemDescription(
+                                    i,
+                                    itemOption.description
+                                  )
+                                "
+                                >{{ itemOption.name | titlecase }}</mat-option
+                              >
+                            </mat-select>
+                          </mat-form-field>
+                        </td>
+                        <td [formGroupName]="i">
+                          <mat-form-field>
+                            <input
+                              type="number"
+                              placeholder="Cantidad"
+                              matInput
+                              formControlName="quantity"
+                              required
+                            />
+                          </mat-form-field>
+                        </td>
+                        <td [formGroupName]="i">
+                          <mat-form-field>
+                            <mat-label>Descripcion</mat-label>
+                            <input
+                              placeholder="Item"
+                              matInput
+                              formControlName="description"
+                            />
+                          </mat-form-field>
+                        </td>
+                        <td>
+                          <button
+                            mat-icon-button
+                            (click)="removeNewItemFormGroup(i)"
+                            type="button"
+                          >
+                            <i class="material-icons">close</i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div
+                  class="card-body"
+                  *ngIf="
+                    editItems.controls.length == 0 &&
+                    newItems.controls.length == 0
+                  "
+                >
+                  <div class="mt-1">
+                    <button
+                      mat-raised-button
+                      class="btn btn-success pull-right"
+                      (click)="addNewItemFormGroup()"
+                      type="button"
+                    >
+                      Agregar Item
+                    </button>
+                  </div>
+                  <p>Ningún componente</p>
+                </div>
+                <button
+                  mat-raised-button
+                  class="btn btn-success pull-right"
+                  type="submit"
+                >
+                  Guardar
+                </button>
+                <button
+                  mat-raised-button
+                  class="btn btn-danger pull-right"
+                  (click)="goBack()"
+                  type="button"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
