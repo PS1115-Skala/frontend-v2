@@ -79,7 +79,7 @@ export class RoomAdminComponent implements OnInit {
       itemsToBeAdded: itemsToBeAdded,
     }).subscribe(({ roomDetails, roomItems, itemsToBeAdded }) => {
       this.room = roomDetails[0];
-      this.picture = `${this.API}/salas/${this.roomId}/picture`;
+      this.picture = `${this.API}/salas/${this.roomId}/picture/`;
       this.items = roomItems;
       this.itemsToBeAdded = itemsToBeAdded;
       this.initRoomForm();
@@ -190,18 +190,24 @@ export class RoomAdminComponent implements OnInit {
         )
       );
     });
-    forkJoin(observableItems).subscribe(
-      () => {
-        this.loadingBar.complete();
-        this.successNotify("Sala actualizada exitosamente.");
-        this.goBack();
-      },
-      (error) => {
-        this.loadingBar.complete();
-        this.errorNotify("Error al modificar los items de la sala.");
-        this.ngOnInit();
-      }
-    );
+    if (observableItems.length > 0) {
+      forkJoin(observableItems).subscribe(
+        () => {
+          this.loadingBar.complete();
+          this.successNotify("Sala actualizada exitosamente.");
+          this.goBack();
+        },
+        (error) => {
+          this.loadingBar.complete();
+          this.errorNotify("Error al modificar los items de la sala.");
+          this.ngOnInit();
+        }
+      );
+    } else {
+      this.loadingBar.complete();
+      this.successNotify("Sala actualizada exitosamente.");
+      this.goBack();
+    }
   }
 
   onSubmit() {

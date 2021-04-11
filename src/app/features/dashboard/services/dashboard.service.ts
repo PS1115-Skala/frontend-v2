@@ -185,7 +185,7 @@ export class DashboardService {
   editImageRoom(roomId: string, image: string) {
     const url = `${API}/salas/${roomId}/picture/new/`;
     return this.http
-      .put<any>(url, { picture: image })
+      .post<any>(url, { picture: image })
       .pipe(catchError(this.handleError));
   }
 }
