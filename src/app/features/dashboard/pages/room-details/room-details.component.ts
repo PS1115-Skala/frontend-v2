@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { LoadingBarService } from "@ngx-loading-bar/core";
+import { USER_TYPE } from "app/core/constants/userType";
+import { CoreService } from "app/core/services/core.service";
 import { environment } from "environments/environment";
 import { Item } from "../../models/item";
 import { Room } from "../../models/room";
@@ -17,11 +19,13 @@ export class RoomDetailsComponent implements OnInit {
   picture: string;
   API = environment.api_url;
   items: Item[];
+  isLabAdmin: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private dashboardService: DashboardService,
-    private loadingBar: LoadingBarService
+    private loadingBar: LoadingBarService,
+    private coreService: CoreService
   ) {}
 
   ngOnInit(): void {
@@ -31,11 +35,14 @@ export class RoomDetailsComponent implements OnInit {
     });
     this.dashboardService.getRoomDetails(this.roomId).subscribe((room) => {
       this.room = room[0];
-      this.picture = `${this.API}/salas/${this.roomId}/picture`;
+      this.picture = `${this.API}/salas/${
+        this.roomId
+      }/picture?lastmod=${Math.random()}`;
     });
     this.dashboardService.getRoomItems(this.roomId).subscribe((items) => {
       this.items = items;
     });
+    this.isLabAdmin = this.coreService.getuserType() == USER_TYPE.LAB_ADMIN;
     this.loadingBar.complete();
   }
 }

@@ -9,17 +9,29 @@ import { DashboardComponent } from "./dashboard.component";
 import { RoomDetailsComponent } from './pages/room-details/room-details.component';
 import { RoomReservationComponent } from './pages/room-reservation/room-reservation.component';
 import { RoomScheduleComponent } from './pages/room-schedule/room-schedule.component';
+import { RoomAdminComponent } from "./pages/room-admin/room-admin.component";
+import { DialogUploadImageComponent } from "./components/dialogs/dialog-upload-image.component";
 import { MatTableModule } from "@angular/material/table";
+import { ImageCropperModule } from "ngx-image-cropper";
 
 @NgModule({
-  declarations: [ListRoomsComponent, DashboardComponent, RoomDetailsComponent, RoomReservationComponent, RoomScheduleComponent],
+  declarations: [
+    ListRoomsComponent,
+    DashboardComponent,
+    RoomDetailsComponent,
+    RoomReservationComponent,
+    RoomScheduleComponent,
+    RoomAdminComponent,
+    DialogUploadImageComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(DashboardRoutes),
     FormsModule,
     ReactiveFormsModule,
     ComponentsModule,
-    MatTableModule
+    MatTableModule,
+    ImageCropperModule,
   ],
 })
 export class DashboardModule {}
