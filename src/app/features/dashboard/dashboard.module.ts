@@ -8,15 +8,18 @@ import { ComponentsModule } from "app/core/components/components.module";
 import { DashboardComponent } from "./dashboard.component";
 import { RoomDetailsComponent } from './pages/room-details/room-details.component';
 import { RoomReservationComponent } from './pages/room-reservation/room-reservation.component';
+import { RoomScheduleComponent } from './pages/room-schedule/room-schedule.component';
+import { MatTableModule } from "@angular/material/table";
 
 @NgModule({
-  declarations: [ListRoomsComponent, DashboardComponent, RoomDetailsComponent, RoomReservationComponent],
+  declarations: [ListRoomsComponent, DashboardComponent, RoomDetailsComponent, RoomReservationComponent, RoomScheduleComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(DashboardRoutes),
     FormsModule,
     ReactiveFormsModule,
     ComponentsModule,
+    MatTableModule
   ],
 })
 export class DashboardModule {}

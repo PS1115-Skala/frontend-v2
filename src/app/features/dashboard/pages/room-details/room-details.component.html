@@ -41,7 +41,7 @@
                     <button
                       type="button"
                       class="btn btn-warning btn-lg btn-block btn-description"
-                      routerLink="/horario/{{ room?.id }}"
+                      [routerLink]="['../../room-schedule/', room.id]"
                     >
                       Horarios
                     </button>
