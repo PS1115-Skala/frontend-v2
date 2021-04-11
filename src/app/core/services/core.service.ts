@@ -7,6 +7,8 @@ import { User } from "app/core/models/user";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import decode from "jwt-decode";
 import { Trimester } from "../models/trimester";
+import { Router } from "@angular/router";
+declare var $: any;
 
 const API = environment.api_url;
 const jwtHelper = new JwtHelperService();
@@ -14,7 +16,7 @@ const jwtHelper = new JwtHelperService();
   providedIn: "root",
 })
 export class CoreService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   /** Funcion para manejo de errores
    *
@@ -34,7 +36,7 @@ export class CoreService {
   }
 
   isLoggedIn(): boolean {
-    const token = localStorage.getItem("token");
+    const token = this.getToken();
     return !jwtHelper.isTokenExpired(token);
   }
 
@@ -44,6 +46,8 @@ export class CoreService {
 
   logout(unauthorized: boolean) {
     localStorage.clear();
+    if (unauthorized) { this.errorNotification('Debe Iniciar Sesión, aún no tiene permiso para esta opción'); }
+    this.router.navigate(['auth/login']);
   }
 
   /** Servicio para consultar id usuario.
@@ -80,5 +84,27 @@ export class CoreService {
    */
   getTrimester(): Observable<Trimester[]> {
     return this.http.get<Trimester[]>(`${API}/trimestre/ultimo/`);
+  }
+
+  successNotification(message: string) {
+    $.notify(
+      { icon: "check", message: message,},
+      {
+        type: "success",
+        timer: 5000,
+        placement: { from: "top", align: "right", },
+      }
+    );
+  }
+
+  errorNotification(message: string) {
+    $.notify(
+      { icon: "error_outline", message: message },
+      {
+        type: "danger",
+        timer: 5000,
+        placement: { from: "top", align: "right", },
+      }
+    );
   }
 }

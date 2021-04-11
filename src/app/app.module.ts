@@ -25,6 +25,7 @@ import { TokenInterceptor } from "./core/interceptors/token.interceptor";
 import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
+  declarations: [AppComponent, AdminLayoutComponent],
   imports: [
     BrowserAnimationsModule,
     FormsModule,
@@ -39,7 +40,6 @@ import { DataTablesModule } from "angular-datatables";
     LoadingBarModule,
     LoadingBarHttpClientModule,
   ],
-  declarations: [AppComponent, AdminLayoutComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
