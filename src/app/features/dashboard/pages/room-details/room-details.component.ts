@@ -35,7 +35,9 @@ export class RoomDetailsComponent implements OnInit {
     });
     this.dashboardService.getRoomDetails(this.roomId).subscribe((room) => {
       this.room = room[0];
-      this.picture = `${this.API}/salas/${this.roomId}/picture`;
+      this.picture = `${this.API}/salas/${
+        this.roomId
+      }/picture?lastmod=${Math.random()}`;
     });
     this.dashboardService.getRoomItems(this.roomId).subscribe((items) => {
       this.items = items;

@@ -216,10 +216,13 @@ export class RoomAdminComponent implements OnInit {
       if (this.croppedImg) {
         this.dashboardService
           .editImageRoom(this.roomId, this.croppedImg)
-          .subscribe((error) => {
-            this.loadingBar.complete();
-            this.errorNotify("Hubo un error al modificar imagen de sala");
-          });
+          .subscribe(
+            () => {},
+            (error) => {
+              this.loadingBar.complete();
+              this.errorNotify("Hubo un error al modificar imagen de sala");
+            }
+          );
       }
       let observableEditRoom = this.dashboardService.editRoom(
         this.roomId,
