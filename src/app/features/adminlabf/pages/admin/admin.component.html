@@ -57,7 +57,6 @@
         </div>
       </div>
     </div>
-    <pre>{{trimesterForm.value | json}}</pre>
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -87,8 +86,8 @@
                     <th class="text-center">{{request.trimester_id}}</th>
                     <th class="text-center">{{request.date | date}}</th>
                     <th class="text-center">
-                      <button mat-raised-button class="btn btn-success">Aprovar</button>
-                      <button mat-raised-button class="btn btn-danger"(click)="viewRejectConfirmation('super F')" >Rechazar</button>
+                      <button mat-raised-button class="btn btn-success" (click)="acceptRequest(request.id)">Aprovar</button>
+                      <button mat-raised-button class="btn btn-danger" (click)="viewRejectConfirmation(request.id)" >Rechazar</button>
                     </th>
                   </tr>
               </tbody>

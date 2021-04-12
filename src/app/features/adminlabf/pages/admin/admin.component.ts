@@ -71,6 +71,16 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  acceptRequest(id){
+    this.adminlabfService.putRoomRequests(id, 'A').subscribe((response) => {
+      this.successNotify(response.message);
+      this.getRoomRequests();
+    },
+    (error) => {
+      this.errorNotify(error);
+    });
+  }
+
   successNotify(message) {
     $.notify(
       {
@@ -106,13 +116,17 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  viewRejectConfirmation(reason: string){
-    this.dialog.open(RejectionModal, {
+  viewRejectConfirmation(id: string){
+    let dialogRef = this.dialog.open(RejectionModal, {
       width: "400px",
       data: {
-        reason: reason
+        id: id
+      }
+    });
+    dialogRef.afterClosed().subscribe(value => {
+      if (value) {
+        this.getRoomRequests();
       }
     });
   }
-
 }

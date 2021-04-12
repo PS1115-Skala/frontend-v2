@@ -50,11 +50,11 @@ export class AdminlabfService {
 
   /** Servicio para aceptar o rechazar una solicitud de sala
    * @param id
-   * @param {{start: string, finish: string}}
+   * @param status
    */
-  putRoomRequests(id: string, status: string): Observable<Trimester> {
+  putRoomRequests(id: string, status: string): Observable<any> {
     const url = `${API}/sala/solicitudes/${id}/`;
-    return this.http.put<any>(url, status).pipe(catchError(this.handleError));
+    return this.http.put<any>(url, {"status": status}).pipe(catchError(this.handleError));
   }
 
 }

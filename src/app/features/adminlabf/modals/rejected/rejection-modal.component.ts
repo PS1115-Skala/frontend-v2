@@ -1,42 +1,71 @@
-import { Component, OnInit, Inject} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { RejectionData } from '../../models/rejection-data';
+import { AdminlabfService } from "../../services/adminlabf.service";
+import { RejectionData } from '../../models/rejectiondata';
+declare var $: any;
 
 @Component({
   selector: 'rejection-modal',
   templateUrl: './rejection-modal.component.html'
 })
+
 export class RejectionModal implements OnInit {
-  rejectionForm;
 
   constructor(
     public dialogRef: MatDialogRef<RejectionModal>,
-    @Inject(MAT_DIALOG_DATA) public data: RejectionData
+    private adminlabfService :AdminlabfService,
+    @Inject(MAT_DIALOG_DATA) public data: RejectionData,
   ) { }
 
-  initRejectionForm(){
-      this.rejectionForm = new FormGroup({
-          reason: new FormControl('',[
-              Validators.required
-          ])
-      });
-  }
-
   ngOnInit() {
-      this.initRejectionForm();
+      
   }
-
-  onSubmit(){
-    if (this.rejectionForm.valid) {
-      this.data.reason = this.reason.value;
+  reject() {
+    this.adminlabfService.putRoomRequests(this.data.id, 'R').subscribe((response) => {
+      this.successNotify(response.message);
       this.dialogRef.close(true);
-    }
+    },
+    (error) => {
+      this.errorNotify(error);
+      this.dialogRef.close(false);
+    });
   }
 
-  close() {
-    this.dialogRef.close();
+  close(refresh) {
+    this.dialogRef.close(refresh);
   }
-
-  get reason() { return this.rejectionForm.get('reason'); }
+  
+  successNotify(message) {
+    $.notify(
+      {
+        icon: "check",
+        message: message,
+      },
+      {
+        type: "success",
+        timer: 5000,
+        placement: {
+          from: "top",
+          align: "right",
+        },
+      }
+    );
+  }
+  
+  errorNotify(message) {
+    $.notify(
+      {
+        icon: "close",
+        message: message,
+      },
+      {
+        type: "danger",
+        timer: 5000,
+        placement: {
+          from: "top",
+          align: "right",
+        },
+      }
+    );
+  }
 }
