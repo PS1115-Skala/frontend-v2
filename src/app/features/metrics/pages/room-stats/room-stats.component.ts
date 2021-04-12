@@ -4,6 +4,7 @@ import { DataTableDirective } from "angular-datatables";
 import { LaboratoriesService } from "app/features/laboratories/services/laboratories.service";
 declare var $: any;
 import * as Chartist from "chartist";
+import * as fileSaver from "file-saver";
 import { Subject } from "rxjs";
 import { MetricsResponse } from "../../models/metrics-response";
 import { MetricsService } from "../../services/metrics.service";
@@ -323,7 +324,16 @@ export class RoomStatsComponent implements OnInit {
         this.selectedEndTerm
       )
       .subscribe(
-        () => {},
+        (data) => {
+          let blob: any = new Blob([data], { type: "zip" });
+          const url = window.URL.createObjectURL(data);
+          fileSaver.saveAs(
+            blob,
+            `reportelab-${
+              this.selectedRoom.id ? this.selectedRoom.id : "Todos-Lab"
+            }-${this.selectedBeginTerm.id}-${this.selectedEndTerm.id}.zip`
+          );
+        },
         (error) => {
           this.showValidationError("Error al obtener el csv de estadisticas");
         }

@@ -64,17 +64,12 @@ export class MetricsService {
       .pipe(catchError(this.handleError));
   }
 
-  getMetricsCSV(
-    labFilter?: any,
-    initTrim?: any,
-    endTrim?: any
-  ): Observable<MetricsResponse> {
+  getMetricsCSV(labFilter?: any, initTrim?: any, endTrim?: any): any {
     const url = `${API}/metrics/reservas/csv/`;
     let params = this.getMetricsParams(labFilter, initTrim, endTrim);
-    return this.http
-      .get<MetricsResponse>(url, {
-        params: params,
-      })
-      .pipe(catchError(this.handleError));
+    return this.http.get(url, {
+      params: params,
+      responseType: "blob",
+    });
   }
 }
