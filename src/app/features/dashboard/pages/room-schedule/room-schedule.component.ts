@@ -1,8 +1,6 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from "rxjs";
 import { DashboardService } from '../../services/dashboard.service';
-import { DataTableDirective } from 'angular-datatables';
 import { Room } from '../../models/room';
 import { ScheduleTable } from '../../models/schedule';
 
@@ -11,7 +9,7 @@ import { ScheduleTable } from '../../models/schedule';
   templateUrl: './room-schedule.component.html',
   styleUrls: ['./room-schedule.component.css']
 })
-export class RoomScheduleComponent implements OnInit, OnDestroy {
+export class RoomScheduleComponent implements OnInit{
   roomId: string;
   room: Room;
   isSpecific: boolean = false;
