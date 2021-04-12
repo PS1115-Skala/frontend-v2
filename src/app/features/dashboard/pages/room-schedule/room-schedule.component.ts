@@ -54,9 +54,6 @@ export class RoomScheduleComponent implements OnInit, OnDestroy {
     this.createTable(week.toString());
   }
 
-  ngOnDestroy(): void {
-  }
-
   mapSchedule(schedule) {
     let mapSchedule: ScheduleTable[] = this.generateEmptySchedule();
     schedule.forEach( (block) => {
