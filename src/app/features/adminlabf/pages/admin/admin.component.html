@@ -6,6 +6,97 @@
       </div>
     </div>
     <hr />
-    <div class="row"></div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header-info card-header">
+            <h3 class="card-title">Administraci&oacute;n de trimestre</h3>
+          </div>
+
+          <div *ngIf="trimester" class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <p>Trimestre Actual:</p>
+              </div>
+              <div class="col-6">
+                {{trimester}}
+              </div>
+            </div>
+
+            <form [formGroup]="trimesterForm" (ngSubmit)="onSubmit(trimesterForm.value)">
+
+              <div class="row">
+                <div class="col-lg-3 col-md-6">
+                  <mat-form-field>
+                    <mat-label>Inicio</mat-label>
+                    <input matInput [matDatepicker]="startDate" formControlName="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                    <mat-datepicker #startDate></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-lg-3 offset-lg-3 col-md-6">
+                  <mat-form-field>
+                    <mat-label>Fin</mat-label>
+                    <input matInput [matDatepicker]="finishDate" formControlName="finishDate">
+                    <mat-datepicker-toggle matSuffix [for]="finishDate"></mat-datepicker-toggle>
+                    <mat-datepicker #finishDate></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 offset-lg-9 col-md-6 offset-md-6">
+                  <button mat-raised-button [disabled]="!trimesterForm.dirty || actionsDisabled" color="primary"
+                    type="submit" class="fill-width">Guardar Cambios</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header-info card-header">
+            <h3 class="card-title">Solicitudes de Creaci&oacute;n de Salas</h3>
+          </div>
+
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                  <tr>
+                      <th class="text-center">Sala</th>
+                      <th class="text-center">Solicitante</th>
+                      <th class="text-center">Dueño</th>
+                      <th class="text-center">Administrador de sala	</th>
+                      <th class="text-center">Trimestre</th>
+                      <th class="text-center">Fecha de Solicitud</th>
+                      <th class="text-center">Aprobar</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let request of roomRequest">
+                    <th class="text-center">{{request.room_id}}</th>
+                    <th class="text-center">{{request.manager_id}}</th>
+                    <th class="text-center">{{request.owner_id}}</th>
+                    <th class="text-center">{{request.requested_id}}</th>
+                    <th class="text-center">{{request.trimester_id}}</th>
+                    <th class="text-center">{{request.date | date}}</th>
+                    <th class="text-center">
+                      <button mat-raised-button class="btn btn-success">Aprovar</button>
+                      <button mat-raised-button class="btn btn-danger"(click)="viewRejectConfirmation('super F')" >Rechazar</button>
+                    </th>
+                  </tr>
+              </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </div>
