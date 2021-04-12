@@ -61,7 +61,7 @@ export class DashboardService {
    */
   getRoomDetails(roomId: string): Observable<Room[]> {
     const url = `${API}/salas/${roomId}/`;
-    return this.http.get<Room[]>(url);
+    return this.http.get<Room[]>(url).pipe(catchError(this.handleError));
   }
 
   /** Servicio para consultar los items de una sala
@@ -71,7 +71,7 @@ export class DashboardService {
    */
   getRoomItems(roomId: string): Observable<Item[]> {
     const url = `${API}/salas/${roomId}/items/`;
-    return this.http.get<Item[]>(url);
+    return this.http.get<Item[]>(url).pipe(catchError(this.handleError));
   }
 
   /** Servicio para consultar las materias disponibles
@@ -79,7 +79,7 @@ export class DashboardService {
    */
   getSubjects(): Observable<Subjects[]> {
     const url = `${API}/subjects/`;
-    return this.http.get<Subjects[]>(url);
+    return this.http.get<Subjects[]>(url).pipe(catchError(this.handleError));
   }
 
   /** Servicio para consultar el horario disponible de una Sala
@@ -89,7 +89,7 @@ export class DashboardService {
    */
   getReservations(idSala: string, semanas: string): Observable<Reservation[]> {
     const url = `${API}/reservas/${idSala}/semana/${semanas}/`;
-    return this.http.get<Reservation[]>(url);
+    return this.http.get<Reservation[]>(url).pipe(catchError(this.handleError));
   }
 
   /** Servicio para crear una solicitud o reserva de sala.
@@ -104,6 +104,88 @@ export class DashboardService {
       : `${API}/crear/solicitudes/reserva/`;
     return this.http
       .post<any>(url, reservation)
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Servicio para obtener todos los items del sistema que no posee una sala
+   *  @param {string} roomId Id de la sala a consultar los items que no posee
+   *  @returns {Item[]} Nombre de los items
+   */
+  getNotItems(roomId: string): Observable<Item[]> {
+    const url = `${API}/not/items/${roomId}/`;
+    return this.http.get<Item[]>(url).pipe(catchError(this.handleError));
+  }
+
+  /** Servicio para eliminar un item de sala
+   * @param {roomId} id de sala
+   * @param {itemId} id de item a eliminar
+   * @returns {any} 204 si es exitosa
+   */
+  deleteItemSala(roomId: string, itemId: string): Observable<any> {
+    const url = `${API}/salas/${roomId}/${itemId}/`;
+    return this.http.delete<any>(url).pipe(catchError(this.handleError));
+  }
+
+  /** Servicio para agregar un item de sala
+   * @param {roomId} id de sala
+   * @param {itemId} id de item a eliminar
+   * @param {quantity} Cantidad de items
+   * @returns {any} 204 si es exitosa
+   */
+  addItemSala(
+    roomId: string,
+    itemId: string,
+    quantity: number
+  ): Observable<any> {
+    const url = `${API}/salas/${roomId}/${itemId}/`;
+    return this.http
+      .post<any>(url, { quantity: quantity })
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Servicio para editar un item de sala
+   * @param {roomId} id de sala
+   * @param {itemId} id de item a eliminar
+   * @param {quantity} Cantidad de items
+   * @returns {any} 204 si es exitosa
+   */
+  editItemSala(
+    roomId: string,
+    itemId: string,
+    quantity: number
+  ): Observable<any> {
+    const url = `${API}/salas/${roomId}/${itemId}/`;
+    return this.http
+      .put<any>(url, { quantity: quantity })
+      .pipe(catchError(this.handleError));
+  }
+  /** Servicio para modificar una sala
+   * @param {roomId} id de la sala
+   * @param {name} name de la sala
+   * @param {description} description de la sala
+   * @param {status} status de la sala
+   * @returns {any} 204 si es exitosa
+   */
+  editRoom(roomId: string, name: string, description: string, status: boolean) {
+    const url = `${API}/salas/${roomId}/`;
+    return this.http
+      .put<any>(url, {
+        name: name,
+        description: description,
+        is_active: String(status),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Servicio para modificar imagen de sala
+   * @param {roomId} id de la sala
+   * @param {image} img de la sala
+   * @returns {any} 204 si es exitosa
+   */
+  editImageRoom(roomId: string, image: string) {
+    const url = `${API}/salas/${roomId}/picture/new/`;
+    return this.http
+      .post<any>(url, { picture: image })
       .pipe(catchError(this.handleError));
   }
 }
