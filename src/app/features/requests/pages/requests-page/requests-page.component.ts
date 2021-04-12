@@ -108,7 +108,10 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
       this.isTableReady = false;
       this.successNotify(response.message);
       this.rerender();
-    })
+    },
+    (error) => {
+      this.errorNotify(error);
+    });
   }
 
   viewRejectedReason(reason: string){
@@ -134,6 +137,9 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
           this.isTableReady = false;
           this.successNotify(response.message);
           this.rerender();
+        },
+        (error) => {
+          this.errorNotify(error);
         })
       }
     });
@@ -144,6 +150,9 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
       this.isTableReady = false;
       this.successNotify(response.message);
       this.rerender();
+    },
+    (error) => {
+      this.errorNotify(error);
     });
   }
 
@@ -155,6 +164,23 @@ export class RequestsPageComponent implements OnDestroy, OnInit {
       },
       {
         type: "success",
+        timer: 5000,
+        placement: {
+          from: "top",
+          align: "right",
+        },
+      }
+    );
+  }
+
+  errorNotify(message) {
+    $.notify(
+      {
+        icon: "close",
+        message: message,
+      },
+      {
+        type: "danger",
         timer: 5000,
         placement: {
           from: "top",
