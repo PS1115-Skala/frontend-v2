@@ -35,7 +35,7 @@ export class AdminlabfService {
    * @param id
    * @param {{start: string, finish: string}}
    */
-  putTrimester(id: string, start_finish: object): Observable<Trimester> {
+  putTrimester(id: string, start_finish: object): Observable<any> {
     const url = `${API}/trimestre/${id}/`;
     return this.http.put<any>(url, start_finish).pipe(catchError(this.handleError));
   }

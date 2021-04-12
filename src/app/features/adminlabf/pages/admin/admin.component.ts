@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { RoomRequest } from "../../models/roomrequest";
 import { MatDialog } from "@angular/material/dialog";
 import { RejectionModal } from '../../modals/rejected/rejection-modal.component';
+declare var $: any;
 
 @Component({
   selector: 'app-admin',
@@ -31,6 +32,7 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.trimester = localStorage.getItem("term");
     this.definirFormulario();
+    this.getTrimester();
     this.getRoomRequests();
   }
 
@@ -61,7 +63,47 @@ export class AdminComponent implements OnInit {
       start: new Date(trimesterData.startDate).toISOString(),
       finish: new Date(trimesterData.finishDate).toISOString()
     };
-    this.adminlabfService.putTrimester(this.trimesterID, dates)
+    this.adminlabfService.putTrimester(this.trimesterID, dates).subscribe((response) => {
+      this.successNotify(response.message);
+    },
+    (error) => {
+      this.errorNotify(error);
+    });
+  }
+
+  successNotify(message) {
+    $.notify(
+      {
+        icon: "check",
+        message: message,
+      },
+      {
+        type: "success",
+        timer: 5000,
+        placement: {
+          from: "top",
+          align: "right",
+        },
+      }
+    );
+  }
+
+
+  errorNotify(message) {
+    $.notify(
+      {
+        icon: "close",
+        message: message,
+      },
+      {
+        type: "danger",
+        timer: 5000,
+        placement: {
+          from: "top",
+          align: "right",
+        },
+      }
+    );
   }
 
   viewRejectConfirmation(reason: string){
