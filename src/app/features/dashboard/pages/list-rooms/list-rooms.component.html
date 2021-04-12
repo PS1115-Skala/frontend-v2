@@ -57,7 +57,7 @@
                 button
                 mat-raised-button
                 class="btn btn-default btn-block h-75"
-                routerLink="/dashboard/horario/{{ room?.id }}"
+                [routerLink]="['../room-schedule/', room.id]"
               >
                 Ver Horarios
               </a>
@@ -67,7 +67,7 @@
                 button
                 mat-raised-button
                 class="btn btn-warning btn-block h-75"
-                routerLink="/dashboard/room-reservation/{{ room.id }}"
+                [routerLink]="['../room-reservation/', room.id]"
               >
                 Reservar
               </a>

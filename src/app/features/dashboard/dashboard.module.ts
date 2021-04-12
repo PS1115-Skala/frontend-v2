@@ -6,10 +6,12 @@ import { DashboardRoutes } from "./dashboard.routing.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ComponentsModule } from "app/core/components/components.module";
 import { DashboardComponent } from "./dashboard.component";
-import { RoomDetailsComponent } from "./pages/room-details/room-details.component";
-import { RoomReservationComponent } from "./pages/room-reservation/room-reservation.component";
+import { RoomDetailsComponent } from './pages/room-details/room-details.component';
+import { RoomReservationComponent } from './pages/room-reservation/room-reservation.component';
+import { RoomScheduleComponent } from './pages/room-schedule/room-schedule.component';
 import { RoomAdminComponent } from "./pages/room-admin/room-admin.component";
 import { DialogUploadImageComponent } from "./components/dialogs/dialog-upload-image.component";
+import { MatTableModule } from "@angular/material/table";
 import { ImageCropperModule } from "ngx-image-cropper";
 
 @NgModule({
@@ -18,6 +20,7 @@ import { ImageCropperModule } from "ngx-image-cropper";
     DashboardComponent,
     RoomDetailsComponent,
     RoomReservationComponent,
+    RoomScheduleComponent,
     RoomAdminComponent,
     DialogUploadImageComponent,
   ],
@@ -27,6 +30,7 @@ import { ImageCropperModule } from "ngx-image-cropper";
     FormsModule,
     ReactiveFormsModule,
     ComponentsModule,
+    MatTableModule,
     ImageCropperModule,
   ],
 })
