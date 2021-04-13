@@ -3,3 +3,15 @@
   width: 50%;
   padding: 10px;
 }
+
+@media (max-width: 500px){
+  .card {
+      margin-top: 400px;
+  }
+}
+
+@media (max-width: 300px){
+  .card {
+      margin-top: 490px;
+  }
+}

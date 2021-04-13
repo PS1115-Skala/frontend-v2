@@ -9,6 +9,7 @@ import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { LoginResponse } from "../models/loginresponse";
 import { VerifyUSBIdentityResponse } from "../models/verifyUsbIdentityResponse";
+import { User } from "app/core/models/user";
 
 const API = environment.api_url;
 
@@ -77,6 +78,18 @@ export class AuthService {
     const url = `${API}/usario/signup/`;
     return this.http
       .post<any>(url, { usbId, clave1, clave2 }, { headers: header })
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Servicio para saber si el usuario esta en la base de datos.
+   *
+   * @param {string} userId Id de Usuario
+   * @returns {User}
+   */
+   getUser(userId: string): Observable<User> {
+     console.log(userId)
+    return this.http
+      .get<User>(`${API}usuario/${userId}`)
       .pipe(catchError(this.handleError));
   }
 }
