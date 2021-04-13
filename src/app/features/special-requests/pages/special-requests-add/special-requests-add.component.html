@@ -12,10 +12,47 @@
         </div>
 
         <div class="card-body">
-          <app-special-requests-form 
+          <app-special-requests-form *ngIf="isFormActive"
             [laboratorios]="laboratorios" 
             (formValues)="onCrear($event)">
            </app-special-requests-form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header card-header-info">
+          <h4 class="card-title">Historico Reservas Especiales</h4>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive" *ngIf="isTableReady">
+
+            <table
+              datatable
+              [dtOptions]="dtOptions"
+              [dtTrigger]="dtTrigger"
+              class="table row-border hover"
+            >
+            
+              <thead>
+                <tr *ngIf="!isLoading">
+                  <th> Solicitante </th>
+                  <th> Usuario </th>
+                  <th> Laboratorio </th>
+                  <th> Fecha Reserva </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let element of dataSource">
+                  <td> {{element.contact_name}} </td>
+                  <td> {{element.requester_id}} </td>
+                  <td> {{element.laboratory}} </td>
+                  <td> {{element.reservation_day | date:'dd/MM/yyyy' }} </td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
         </div>
       </div>
     </div>

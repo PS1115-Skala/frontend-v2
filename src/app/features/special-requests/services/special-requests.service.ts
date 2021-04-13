@@ -46,6 +46,15 @@ export class SpecialRequestsService {
     return this.http.get<any[]>(endpoint, { params: params });
   }
 
+  /** Consulta Reservas Especiales Por Usuario
+  * 
+  * @param idUser
+  * @returns 
+  */
+  getUserSpecialReservations(idUser: string): Observable<any[]> {
+    return this.http.get<any[]>(`${API}/special/user/${idUser}` );
+  }
+
   /** crear reservarEspeciales 
    * 
    * Requiere Permisos de Logueado */
