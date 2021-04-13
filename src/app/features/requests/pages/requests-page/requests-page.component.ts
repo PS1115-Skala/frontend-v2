@@ -8,9 +8,9 @@ import { RequestsResponseAdmin } from "../../models/requests-response-admin";
 import { RejectionData } from '../../models/rejection-data';
 import { RequestsService } from "../../services/requests.service";
 import { MatDialog } from "@angular/material/dialog";
-import { ScheduleModal } from "../../modals/schedule/schedule-modal.component";
-import { ViewReasonModal } from '../../modals/rejected/view-reason.component';
-import { RejectionModal } from '../../modals/rejected/rejection-modal.component';
+import { ScheduleModal } from "../../components/schedule/schedule-modal.component";
+import { ViewReasonModal } from '../../components/rejected/view-reason.component';
+import { RejectionModal } from '../../components/rejected/rejection-modal.component';
 import { DataTableDirective } from 'angular-datatables';
 declare var $: any;
 

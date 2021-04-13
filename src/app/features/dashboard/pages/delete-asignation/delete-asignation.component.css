@@ -1,0 +1,23 @@
+.form-check .form-check-label .circle .check {
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+    background-color: #1FBED2;
+}
+
+.form-check .form-check-input:checked ~ .circle {
+    border-color: #1FBED2;
+}
+
+.card .form-check {
+    margin-top: 0;
+}
+
+.form-check {
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+tr.mat-row {
+    height: 5px !important;
+}

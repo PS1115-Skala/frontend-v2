@@ -10,9 +10,12 @@ import { RoomDetailsComponent } from './pages/room-details/room-details.componen
 import { RoomReservationComponent } from './pages/room-reservation/room-reservation.component';
 import { RoomScheduleComponent } from './pages/room-schedule/room-schedule.component';
 import { RoomAdminComponent } from "./pages/room-admin/room-admin.component";
+import { DeleteAsignationComponent } from "./pages/delete-asignation/delete-asignation.component";
 import { DialogUploadImageComponent } from "./components/dialogs/dialog-upload-image.component";
 import { MatTableModule } from "@angular/material/table";
 import { ImageCropperModule } from "ngx-image-cropper";
+import { DialogSpecificWeek } from "./components/delete-asignation/dialog-specific-week.component";
+import { DialogDeleteConfirm } from "./components/delete-asignation/dialog-delete-confirm.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { ImageCropperModule } from "ngx-image-cropper";
     RoomReservationComponent,
     RoomScheduleComponent,
     RoomAdminComponent,
+    DeleteAsignationComponent,
     DialogUploadImageComponent,
+    DialogSpecificWeek,
+    DialogDeleteConfirm
   ],
   imports: [
     CommonModule,

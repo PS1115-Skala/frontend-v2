@@ -5,4 +5,9 @@ export interface ScheduleTable {
     miercoles: string;
     jueves: string;
     viernes: string;
+    lunesCheck?: boolean;
+    martesCheck?: boolean;
+    miercolesCheck?: boolean;
+    juevesCheck?: boolean;
+    viernesCheck?: boolean;
 }
