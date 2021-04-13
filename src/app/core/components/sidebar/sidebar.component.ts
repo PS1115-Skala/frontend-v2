@@ -112,7 +112,7 @@ export class SidebarComponent implements OnInit {
 
   addMetricRoute() {
     this.menuItems.push({
-      path: "/metricas",
+      path: "/metrics",
       title: "Métricas",
       icon: "analytics",
       class: "",

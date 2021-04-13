@@ -15,6 +15,7 @@ import { AdminUsersComponent } from "./features/admin-users/admin-users.componen
 import { BasicauthGuard } from "./core/guards/basicauth.guard";
 import { LabFGuard } from "./core/guards/lab-f.guard";
 import { AdminLabGuard } from "./core/guards/admin-lab.guard";
+import { MetricsComponent } from "./features/metrics/metrics.component";
 
 const routes: Routes = [
   {
@@ -110,6 +111,17 @@ const routes: Routes = [
         path: "",
         loadChildren:
           "./features/admin-users/admin-users.module#AdminUsersModule",
+      },
+    ],
+  },
+  {
+    path: "metrics",
+    component: MetricsComponent,
+    canActivate: [BasicauthGuard, LabFGuard],
+    children: [
+      {
+        path: "",
+        loadChildren: "./features/metrics/metrics.module#MetricsModule",
       },
     ],
   },
