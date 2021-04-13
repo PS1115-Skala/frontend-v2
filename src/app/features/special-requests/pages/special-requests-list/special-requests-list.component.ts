@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { DataTableDirective } from 'angular-datatables';
-import { USER_TYPE } from 'app/core/constants/userType';
-import { CoreService } from 'app/core/services/core.service';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { DataTableDirective } from 'angular-datatables';
+import { USER_TYPE } from 'app/core/constants/userType';
+
+import { CoreService } from 'app/core/services/core.service';
 import { DeleteAsignationModalComponent } from '../../modals/delete-asignation-modal.component';
 import { SpecialRequestsFormModalComponent } from '../../modals/special-requests-form-modal.component';
 import { SpecialRequestsService } from '../../services/special-requests.service';
@@ -29,13 +31,23 @@ export class SpecialRequestsListComponent implements OnInit, OnDestroy, AfterVie
   trimestres: any[];
   dataSource: any[];
   dialogRef: any;
+  mySubscription;
 
   constructor(
     private specialRequestsService: SpecialRequestsService,
     private coreService: CoreService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
-  ) { }
+    private router: Router,
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+         // Trick the Router into believing it's last link wasn't previously loaded
+         this.router.navigated = false;
+      }
+    });
+  }
 
   ngOnInit() {
     this.isLoading = false;
@@ -49,7 +61,9 @@ export class SpecialRequestsListComponent implements OnInit, OnDestroy, AfterVie
   }
 
   ngOnDestroy() {
+    this.dtTrigger.unsubscribe();
     if (this.dialogRef) { this.dialogRef.close() }
+    if (this.mySubscription) { this.mySubscription.unsubscribe(); }
   }
 
   ngAfterViewInit() {
@@ -71,7 +85,6 @@ export class SpecialRequestsListComponent implements OnInit, OnDestroy, AfterVie
     this.specialRequestsService.getSpecialReservations(laboratorio, trimestre)
     .pipe(finalize( () => {this.dtTrigger.next()} ))
     .subscribe( response => {
-      console.log(response);
       this.dataSource = response;
       this.isLoading = false;
       this.isTableReady = true;
@@ -106,11 +119,8 @@ export class SpecialRequestsListComponent implements OnInit, OnDestroy, AfterVie
     };
   }
 
-  rerender(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.ngOnInit();
-    });
+  reLoad(){
+    this.router.navigate([this.router.url])
   }
 
   /** Filtra reservas especiales de tabla */
@@ -118,7 +128,7 @@ export class SpecialRequestsListComponent implements OnInit, OnDestroy, AfterVie
     const laboratorio = !this.isLabF ? this.coreService.getuserId() : null
     const trimestre = this.form.value.trimestre == 'todos' ? null : this.form.value.trimestre;
     this.loadReservasEspeciales(laboratorio, trimestre);
-    this.rerender();
+    this.reLoad();
   }
 
   /** Abrir dialogo de form reservas especiales */
@@ -172,7 +182,10 @@ export class SpecialRequestsListComponent implements OnInit, OnDestroy, AfterVie
     const userId = this.coreService.getuserId();
     this.specialRequestsService.createSpecialReservation(values, userId)
     .subscribe( 
-      response => { this.coreService.successNotification(response.message); this.onFormChange({}) },
+      response => { 
+        this.coreService.successNotification(response.message); 
+        this.onFormChange({}); 
+      },
       error => { this.coreService.errorNotification(error.error.error); } 
     );
   }
