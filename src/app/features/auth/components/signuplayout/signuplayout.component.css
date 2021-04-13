@@ -4,14 +4,23 @@
   padding: 10px;
 }
 
-@media (max-width: 500px){
+@media (max-width: 767px){
   .card {
-      margin-top: 400px;
+      margin-top: 180px;
+  }
+  .center {
+    display: none;
   }
 }
 
 @media (max-width: 300px){
   .card {
-      margin-top: 490px;
+      margin-top: 180px;
+  }
+}
+
+@media (min-width: 769px){
+  .card {
+    margin-top: 18%;
   }
 }

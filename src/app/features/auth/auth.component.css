@@ -575,6 +575,10 @@ pre code {
   .nav-link {
     opacity: 1 !important;
   }
+  .justify-content-end {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
 }
 @media (min-width: 576px) {

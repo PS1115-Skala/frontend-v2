@@ -5,6 +5,7 @@ import { AuthComponent } from "./auth.component";
 import {
   DialogErrorLogin,
   LoginComponent,
+  DialogRecoverPassword,
 } from "./pages/login/login.component";
 import { DialogErrorRecoverPassword,DialogSuccessRecoverPassword,RecoverPasswordComponent } from "./pages/recover-password/recover-password.component";
 import {
@@ -33,6 +34,7 @@ import { DialogSuccessRecoverNewPassword,RecoverNewPasswordComponent } from "./p
     DialogSuccessRecoverPassword,
     DialogSuccessRecoverNewPassword,
     DialogSuccessSignUp,
+    DialogRecoverPassword,
   ],
   imports: [
     CommonModule,
