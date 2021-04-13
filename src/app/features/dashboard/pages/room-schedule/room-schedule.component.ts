@@ -36,7 +36,7 @@ export class RoomScheduleComponent implements OnInit{
   }
 
   createTable(typeWeek){
-    this.dashboardService.getReservations(this.roomId, typeWeek).subscribe((asignation) => {
+    this.dashboardService.getReservationsSchedule(this.roomId, typeWeek).subscribe((asignation) => {
       this.dataSource = this.mapSchedule(asignation);
     });
   }

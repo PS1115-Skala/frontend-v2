@@ -87,8 +87,8 @@ export class DashboardService {
    *  @param {string} semanas semana a consultar
    * @returns {Reservation[]}
    */
-  getReservations(idSala: string, semanas: string): Observable<Reservation[]> {
-    const url = `${API}/reservas/${idSala}/semana/${semanas}/`;
+  getReservationsSchedule(idSala: string, typeWeek: string): Observable<Reservation[]> {
+    const url = `${API}/reservas/${idSala}/semana/${typeWeek}/`;
     return this.http.get<Reservation[]>(url).pipe(catchError(this.handleError));
   }
 
@@ -186,6 +186,26 @@ export class DashboardService {
     const url = `${API}/salas/${roomId}/picture/new/`;
     return this.http
       .post<any>(url, { picture: image })
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Servicio crear una reserva de eliminación
+   * @param {roomId} roomId id de la sala
+   * @param {typeWeek} typeWeek semana a consultar
+   * @param {scheduleList} scheduleList lista con los horarios a eliminar
+   * @returns {any} 204 si es exitosa
+   */
+  createRequestToDelete(room: string, typeWeek: string, scheduleList: any[]): Observable<any>{
+    const url = `${API}/eliminar/reserva`;
+    const body = [];
+    const request = {
+      room: room,
+      semanas: parseInt(typeWeek) ? parseInt(typeWeek) : typeWeek
+    };
+    body.push(request);
+    body.push(...scheduleList);
+    return this.http
+      .post<any>(url, body)
       .pipe(catchError(this.handleError));
   }
 }
