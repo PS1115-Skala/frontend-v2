@@ -48,7 +48,7 @@ export class SidebarComponent implements OnInit {
         class: "",
       },
       {
-        path: "/special-requests/list",
+        path: "/special-requests/add",
         title: "Reservas Especiales",
         icon: "flare",
         class: "",
@@ -71,9 +71,11 @@ export class SidebarComponent implements OnInit {
       this.addAdminRoute();
       this.addUsuariosRoute();
       this.addMetricRoute();
+      this.modifiedSpecialReservationsPath();
     }
     if (userType == USER_TYPE.LAB_ADMIN) {
       this.addNewRoomsRoute();
+      this.modifiedSpecialReservationsPath();
     }
   }
   isMobileMenu() {
@@ -117,5 +119,10 @@ export class SidebarComponent implements OnInit {
       icon: "analytics",
       class: "",
     });
+  }
+
+  modifiedSpecialReservationsPath() {
+    let reservasEspeciales = this.menuItems.find(item => item.title == "Reservas Especiales");
+    reservasEspeciales.path = "/special-requests/list"
   }
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { TIPO_USUARIO } from 'app/core/constants/userType';
 import { Subject } from 'rxjs-compat';
+import { finalize } from 'rxjs/operators';
 import { AdminUsersService } from '../../services/admin-users.service';
 
 @Component({
@@ -76,11 +77,11 @@ export class ListUsersComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isLoading = true;
     tipoUsuario = tipoUsuario != 'todos' ? tipoUsuario : undefined;
     this.usersService.getUsers(tipoUsuario)
-    .finally( () => {
+    .pipe(finalize( () => {
       this.isLoading = false;
       this.isTableReady = true;
       this.dtTrigger.next();
-    })
+    }))
     .subscribe( response => {
       this.dataSource = response;
     });
