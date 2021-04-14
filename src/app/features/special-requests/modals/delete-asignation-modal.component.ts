@@ -2,15 +2,27 @@ import { Component, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-dialog-delete-asignation',
+  selector: "app-dialog-delete-asignation",
   template: `
     <h1 mat-dialog-title>{{ title }}</h1>
     <div mat-dialog-content>
       <p>{{ message }}</p>
     </div>
     <div mat-dialog-actions align="center">
-      <button mat-button (click)="onClick('No')">Cancelar</button>
-      <button mat-button (click)="onClick('Si')">Aceptar</button>
+      <button
+        mat-button
+        class="btn btn-danger pull-right"
+        (click)="onClick('No')"
+      >
+        Cancelar
+      </button>
+      <button
+        mat-button
+        class="btn btn-success pull-right"
+        (click)="onClick('Si')"
+      >
+        Aceptar
+      </button>
     </div>
   `,
 })
@@ -26,10 +38,10 @@ export class DeleteAsignationModalComponent {
     this.dialogRef.disableClose = true;
     this.title = data.title;
     this.message = data.message;
-    this.field = 'Si';
+    this.field = "Si";
   }
 
   onClick(respuesta: string) {
-    this.dialogRef.close(respuesta == 'Si' ? this.field : respuesta);
+    this.dialogRef.close(respuesta == "Si" ? this.field : respuesta);
   }
 }

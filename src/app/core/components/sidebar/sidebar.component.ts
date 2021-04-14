@@ -54,18 +54,14 @@ export class SidebarComponent implements OnInit {
         class: "",
       },
     ];
-    if (!this.userName) {
-      this.coreService.getUserDetails(userId).subscribe((user) => {
-        localStorage.setItem("userName", user[0].name);
-        this.userName = user[0].name;
-      });
-    }
-    if (!this.trimester) {
-      this.coreService.getTrimester().subscribe((term) => {
-        localStorage.setItem("term", term[0].id);
-        this.trimester = term[0].id;
-      });
-    }
+    this.coreService.getUserDetails(userId).subscribe((user) => {
+      localStorage.setItem("userName", user[0].name);
+      this.userName = user[0].name;
+    });
+    this.coreService.getTrimester().subscribe((term) => {
+      localStorage.setItem("term", term[0].id);
+      this.trimester = term[0].id;
+    });
     this.menuItems = ROUTES;
     if (userType == USER_TYPE.LAB_F) {
       this.addAdminRoute();
@@ -122,7 +118,9 @@ export class SidebarComponent implements OnInit {
   }
 
   modifiedSpecialReservationsPath() {
-    let reservasEspeciales = this.menuItems.find(item => item.title == "Reservas Especiales");
-    reservasEspeciales.path = "/special-requests/list"
+    let reservasEspeciales = this.menuItems.find(
+      (item) => item.title == "Reservas Especiales"
+    );
+    reservasEspeciales.path = "/special-requests/list";
   }
 }
