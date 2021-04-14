@@ -27,11 +27,11 @@ export class RejectionModal implements OnInit {
     },
     (error) => {
       this.errorNotify('Hubo un error al procesar esta acción');
-      this.dialogRef.close(false);
+      this.dialogRef.close();
     });
   }
 
-  close(refresh) {
+  close(refresh=false) {
     this.dialogRef.close(refresh);
   }
   
