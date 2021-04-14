@@ -29,25 +29,35 @@
                 <div class="col-lg-3 col-md-6">
                   <mat-form-field>
                     <mat-label>Inicio</mat-label>
-                    <input matInput [matDatepicker]="startDate" formControlName="startDate">
+                    <input matInput [matDatepicker]="startDate" formControlName="startDate" [max]="trimesterForm.controls.finishDate.value">
                     <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
                     <mat-datepicker #startDate></mat-datepicker>
+                    <mat-error *ngIf="trimesterForm.controls.startDate.errors">
+                      <span *ngIf="trimesterForm.controls.startDate.errors.dateInValid">
+                        Fecha de inicio debe ser anterior a la fecha de finalizacion
+                      </span>
+                    </mat-error>
                   </mat-form-field>
                 </div>
 
                 <div class="col-lg-3 offset-lg-3 col-md-6">
                   <mat-form-field>
                     <mat-label>Fin</mat-label>
-                    <input matInput [matDatepicker]="finishDate" formControlName="finishDate">
+                    <input matInput [matDatepicker]="finishDate" formControlName="finishDate" [min]="trimesterForm.controls.startDate.value">
                     <mat-datepicker-toggle matSuffix [for]="finishDate"></mat-datepicker-toggle>
                     <mat-datepicker #finishDate></mat-datepicker>
+                    <mat-error *ngIf="trimesterForm.controls.finishDate.errors">
+                      <span *ngIf="trimesterForm.controls.finishDate.errors.dateInValid">
+                        Fecha de finalizacion debe ser posterior a la fecha de inicio
+                      </span>
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-lg-3 offset-lg-9 col-md-6 offset-md-6">
-                  <button mat-raised-button [disabled]="!trimesterForm.dirty || actionsDisabled" color="primary"
+                  <button mat-raised-button [disabled]="trimesterForm.invalid || (trimesterForm.pristine)" color="primary"
                     type="submit" class="fill-width">Guardar Cambios</button>
                 </div>
               </div>

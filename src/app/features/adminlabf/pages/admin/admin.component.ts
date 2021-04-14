@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminlabfService } from "../../services/adminlabf.service";
 import { CoreService } from "app/core/services/core.service";
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { RoomRequest } from "../../models/roomrequest";
 import { MatDialog } from "@angular/material/dialog";
 import { RejectionModal } from '../../modals/rejected/rejection-modal.component';
@@ -17,8 +17,6 @@ export class AdminComponent implements OnInit {
   trimester: string = "";
   trimesterID: string = "";
   trimesterForm: FormGroup;
-  // buttons controllers
-  actionsDisabled = false;
 
   roomRequest: RoomRequest[];
 
@@ -30,24 +28,44 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.trimester = localStorage.getItem("term");
     this.definirFormulario();
+    this.trimester = localStorage.getItem("term");
     this.getTrimester();
     this.getRoomRequests();
   }
 
+  dateValidator(): ValidatorFn {
+    return (control:AbstractControl) : ValidationErrors | null => {
+      
+      const value = control.value;
+      
+      if (!value) {
+        return null;
+      }
+      
+      let dateValid = false;
+      let start = new Date(this.trimesterForm.controls.startDate.value).toISOString();
+      let finish = new Date(this.trimesterForm.controls.finishDate.value).toISOString();
+
+      if(start < finish) {
+        dateValid = true;
+      }
+
+      return !dateValid ? { dateInValid:true }: null;
+    }
+  }
+
   definirFormulario() {
     this.trimesterForm = this.formBuilder.group({
-      startDate: [null],
-      finishDate: [null]
+      startDate: [null, this.dateValidator()],
+      finishDate: [null, this.dateValidator()]
     });
   }
 
   getTrimester() {
     this.coreService.getTrimester().subscribe((term) => {
       this.trimesterID = term[0].id;
-      this.trimesterForm.patchValue({startDate: term[0].start});
-      this.trimesterForm.patchValue({finishDate: term[0].finish});
+      this.trimesterForm.patchValue({startDate: term[0].start, finishDate: term[0].finish});
     });
   }
 
@@ -58,7 +76,6 @@ export class AdminComponent implements OnInit {
   }
 
   onSubmit(trimesterData) {
-    this.actionsDisabled = true;
     const dates = {
       start: new Date(trimesterData.startDate).toISOString(),
       finish: new Date(trimesterData.finishDate).toISOString()
@@ -67,7 +84,7 @@ export class AdminComponent implements OnInit {
       this.successNotify(response.message);
     },
     (error) => {
-      this.errorNotify(error);
+      this.errorNotify('Hubo un error al procesar esta acción');
     });
   }
 
@@ -77,7 +94,7 @@ export class AdminComponent implements OnInit {
       this.getRoomRequests();
     },
     (error) => {
-      this.errorNotify(error);
+      this.errorNotify('Hubo un error al procesar esta acción');
     });
   }
 
