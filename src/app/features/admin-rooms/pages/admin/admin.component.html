@@ -15,25 +15,36 @@
           </div>
 
           <div class="card-body">
-            <form [formGroup]="newRoomForm" 
-            (ngSubmit)="onSubmit()">
-              <div class="row" style="margin: 10px 0;">
+            <form [formGroup]="newRoomForm" (ngSubmit)="onSubmit()">
+              <div class="row" style="margin: 10px 0">
                 <div class="col-lg-3 col-md-6">
                   <mat-form-field>
                     <mat-label>Id de Sala</mat-label>
-                    <input matInput formControlName="room_id"
-                    placeholder="Ex. MYS-999">
+                    <input
+                      matInput
+                      formControlName="room_id"
+                      placeholder="Ex. MYS-999"
+                    />
                     <mat-error *ngIf="newRoomForm.controls.room_id.errors">
-                      <span *ngIf="newRoomForm.controls.room_id.errors.stringValid">
+                      <span
+                        *ngIf="newRoomForm.controls.room_id.errors.stringValid"
+                      >
                         El formato de sala es EDIFICIO-NUMERO
                       </span>
                     </mat-error>
                   </mat-form-field>
                 </div>
-                <div class="col-lg-3 col-md-6" style="display: flex; align-items: center;">
-                  <button mat-raised-button
-                  [disabled]="newRoomForm.invalid || (newRoomForm.pristine)"
-                  color="primary" type="submit" class="fill-width" >
+                <div
+                  class="col-lg-3 col-md-6"
+                  style="display: flex; align-items: center"
+                >
+                  <button
+                    mat-raised-button
+                    [disabled]="newRoomForm.invalid || newRoomForm.pristine"
+                    color="primary"
+                    type="submit"
+                    class="fill-width"
+                  >
                     Enviar Solicitud
                   </button>
                 </div>
@@ -52,28 +63,35 @@
           </div>
 
           <div class="card-body">
-            <table class="table">
+            <table
+              class="table"
+              datatable
+              [dtOptions]="dtOptions"
+              [dtTrigger]="dtTrigger"
+            >
               <thead>
-                  <tr>
-                      <th class="text-center">Sala</th>
-                      <th class="text-center">Solicitante</th>
-                      <th class="text-center">Dueño</th>
-                      <th class="text-center">Administrador de sala	</th>
-                      <th class="text-center">Trimestre</th>
-                      <th class="text-center">Fecha de Solicitud</th>
-                      <th class="text-center">Estatus</th>
-                  </tr>
+                <tr>
+                  <th class="text-center">Sala</th>
+                  <th class="text-center">Solicitante</th>
+                  <th class="text-center">Dueño</th>
+                  <th class="text-center">Administrador de sala</th>
+                  <th class="text-center">Trimestre</th>
+                  <th class="text-center">Fecha de Solicitud</th>
+                  <th class="text-center">Estatus</th>
+                </tr>
               </thead>
               <tbody>
-                  <tr *ngFor="let request of roomRequest">
-                    <th class="text-center">{{request.room_id}}</th>
-                    <th class="text-center">{{request.manager_id}}</th>
-                    <th class="text-center">{{request.owner_id}}</th>
-                    <th class="text-center">{{request.requested_id}}</th>
-                    <th class="text-center">{{request.trimester_id}}</th>
-                    <th class="text-center">{{request.date | date}}</th>
-                    <th class="text-center">{{request.status | requestStatus}}</th>
-                  </tr>
+                <tr *ngFor="let request of roomRequest">
+                  <th class="text-center">{{ request.room_id }}</th>
+                  <th class="text-center">{{ request.manager_id }}</th>
+                  <th class="text-center">{{ request.owner_id }}</th>
+                  <th class="text-center">{{ request.requested_id }}</th>
+                  <th class="text-center">{{ request.trimester_id }}</th>
+                  <th class="text-center">{{ request.date | date }}</th>
+                  <th class="text-center">
+                    {{ request.status | requestStatus }}
+                  </th>
+                </tr>
               </tbody>
             </table>
           </div>
