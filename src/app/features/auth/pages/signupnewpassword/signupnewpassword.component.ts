@@ -8,6 +8,23 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import { LoadingBarService } from "@ngx-loading-bar/core";
 import { AuthService } from "../../services/auth.service";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+
+@Component({
+  selector: "dialog-successSignUp",
+  templateUrl: "dialog-successSignUp.html",
+})
+export class DialogSuccessSignUp {
+  constructor(public dialogRef: MatDialogRef<DialogSuccessSignUp>) {}
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  ngOnDestroy(): void {
+    this.close();
+  }
+}
 
 @Component({
   selector: "app-signupnewpassword",
@@ -25,6 +42,7 @@ export class SignupnewpasswordComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private route: ActivatedRoute,
+    public dialog: MatDialog,
     private LoadingBar: LoadingBarService
   ) {
     try {
@@ -85,6 +103,7 @@ export class SignupnewpasswordComponent implements OnInit {
         .subscribe(
           () => {
             this.LoadingBar.stop();
+            const dialogRef = this.dialog.open(DialogSuccessSignUp);
             localStorage.removeItem("tokenSignUp");
             this.router.navigate(["auth/login"]);
           },
