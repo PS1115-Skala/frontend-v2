@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
 import { Observable, throwError } from "rxjs";
 import { catchError, retry } from "rxjs/operators";
+import { RoomRequest } from "../../adminlabf/models/roomrequest";
 
 const API = environment.api_url;
 
@@ -31,16 +32,15 @@ export class AdminRoomsService {
   
   /** Servicio para consultar todas las solicitudes de sala
    * @param id
-   * @returns {any[]} Lista de usuarios de tipo administrador de laboratorio
+   * @returns {RoomRequest[]} Solicitudes de sala realizadas por el administrador de laboratorio
    */
-  getRoomRequests(id: string): Observable<any[]> {
+  getRoomRequests(id: string): Observable<RoomRequest[]> {
     const url = `${API}/sala/solicitudes/crear/${id}/`;
-    return this.http.get<any[]>(url).pipe(catchError(this.handleError));
+    return this.http.get<RoomRequest[]>(url).pipe(catchError(this.handleError));
   }
 
-  /** Servicio para consultar todas las solicitudes de sala
+  /** Servicio para crear una nueva solicitud de sala
    * @param id
-   * @returns {any[]} Lista de usuarios de tipo administrador de laboratorio
    */
   postRoomRequest(id: string, room_id: string): Observable<any> {
     const url = `${API}/sala/solicitudes/crear/${id}/`;

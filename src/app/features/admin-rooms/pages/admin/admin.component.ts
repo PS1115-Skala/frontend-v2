@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminRoomsService } from "../../services/admin-rooms.service";
 import { CoreService } from "app/core/services/core.service";
 import { FormBuilder, FormGroup, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { RoomRequest } from "../../../adminlabf/models/roomrequest";
 declare var $: any;
 
 @Component({
@@ -12,7 +13,7 @@ declare var $: any;
 export class AdminComponent implements OnInit {
 
   userId: string;
-  roomRequest: any[];
+  roomRequest: RoomRequest[];
   newRoomForm: FormGroup;
 
   constructor(
