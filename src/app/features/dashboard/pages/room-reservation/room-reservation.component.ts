@@ -87,7 +87,7 @@ export class RoomReservationComponent implements OnInit {
     this.selectedDayHours = [];
     this.checkCounts = 0;
     this.dashboardService
-      .getReservations(this.roomId, semana)
+      .getReservationsSchedule(this.roomId, semana)
       .subscribe((dayHours) => {
         this.reservedDayHours = Object.create(null);
         dayHours.forEach((reservation) => {
