@@ -5,17 +5,19 @@ import { AuthComponent } from "./auth.component";
 import {
   DialogErrorLogin,
   LoginComponent,
+  DialogRecoverPassword,
 } from "./pages/login/login.component";
-import { RecoverPasswordComponent } from "./pages/recover-password/recover-password.component";
+import { DialogErrorRecoverPassword,DialogSuccessRecoverPassword,RecoverPasswordComponent } from "./pages/recover-password/recover-password.component";
 import {
   DialogSignUp,
   SignUpComponent,
 } from "./pages/sign-up/sign-up.component";
-import { SignupnewpasswordComponent } from "./pages/signupnewpassword/signupnewpassword.component";
+import { DialogSuccessSignUp,SignupnewpasswordComponent } from "./pages/signupnewpassword/signupnewpassword.component";
 import { AuthRoutes } from "./auth.routing.module";
 import { RouterModule } from "@angular/router";
 import { MatDialogModule } from "@angular/material/dialog";
 import { SignuplayoutComponent } from './components/signuplayout/signuplayout.component';
+import { DialogSuccessRecoverNewPassword,RecoverNewPasswordComponent } from "./pages/recover-newpassword/recover-newpassword.component";
 
 @NgModule({
   declarations: [
@@ -24,9 +26,15 @@ import { SignuplayoutComponent } from './components/signuplayout/signuplayout.co
     RecoverPasswordComponent,
     SignUpComponent,
     SignupnewpasswordComponent,
+    RecoverNewPasswordComponent,
     DialogErrorLogin,
     DialogSignUp,
     SignuplayoutComponent,
+    DialogErrorRecoverPassword,
+    DialogSuccessRecoverPassword,
+    DialogSuccessRecoverNewPassword,
+    DialogSuccessSignUp,
+    DialogRecoverPassword,
   ],
   imports: [
     CommonModule,

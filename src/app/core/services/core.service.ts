@@ -86,6 +86,22 @@ export class CoreService {
     return this.http.get<Trimester[]>(`${API}/trimestre/ultimo/`);
   }
 
+  /** Servicio para consultar de todos los trimestres.
+   *
+   * @returns {Trimester}
+   */
+  getTrimesters(): Observable<Trimester[]> {
+    return this.http.get<Trimester[]>(API + "/trimestre/todos");
+  }
+
+  /** Servicio que consulta los Laboratorios
+   * 
+   * @returns 
+   */
+  getAdminLabs(): Observable<any[]> {
+    return this.http.get<any[]>(API + "/usuarios/admin");
+  }
+
   successNotification(message: string) {
     $.notify(
       { icon: "check", message: message,},

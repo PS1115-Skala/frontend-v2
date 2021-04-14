@@ -22,6 +22,22 @@ export class DialogErrorLogin {
 }
 
 @Component({
+  selector: "dialog-RecoverPassword",
+  templateUrl: "dialog-RecoverPassword.html",
+})
+export class DialogRecoverPassword {
+  constructor(public dialogRef: MatDialogRef<DialogRecoverPassword>) {}
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  ngOnDestroy(): void {
+    this.close();
+  }
+}
+
+@Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css", "../../auth.component.css"],
@@ -62,5 +78,9 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+  }
+
+  recover_password(){
+    const dialogRef = this.dialog.open(DialogRecoverPassword);
   }
 }
