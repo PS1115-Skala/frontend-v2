@@ -3,3 +3,24 @@
   width: 50%;
   padding: 10px;
 }
+
+@media (max-width: 767px){
+  .card {
+      margin-top: 180px;
+  }
+  .center {
+    display: none;
+  }
+}
+
+@media (max-width: 300px){
+  .card {
+      margin-top: 180px;
+  }
+}
+
+@media (min-width: 769px){
+  .card {
+    margin-top: 18%;
+  }
+}

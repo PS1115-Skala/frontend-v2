@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AdminauthGuard } from './adminauth.guard';
+import { AdminOrLabfGuard } from './admin-or-labf.guard';
 
-describe('AdminauthGuard', () => {
-  let guard: AdminauthGuard;
+describe('AdminOrLabfGuard', () => {
+  let guard: AdminOrLabfGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(AdminauthGuard);
+    guard = TestBed.inject(AdminOrLabfGuard);
   });
 
   it('should be created', () => {

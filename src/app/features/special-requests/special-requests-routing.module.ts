@@ -1,9 +1,12 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { SpeacialRequestsListComponent } from "./pages/speacial-requests-list/speacial-requests-list.component";
+import { AdminOrLabfGuard } from "app/core/guards/admin-or-labf.guard";
+import { SpecialRequestsAddComponent } from "./pages/special-requests-add/special-requests-add.component";
+import { SpecialRequestsListComponent } from "./pages/special-requests-list/special-requests-list.component";
 
 const routes: Routes = [
-  { path: "list", component: SpeacialRequestsListComponent },
+  { path: "list", component: SpecialRequestsListComponent, canActivate: [AdminOrLabfGuard] },
+  { path: "add", component: SpecialRequestsAddComponent, },
 ];
 
 @NgModule({
