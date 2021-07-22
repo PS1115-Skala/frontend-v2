@@ -1,0 +1,17 @@
+<h2 mat-dialog-title class="prueba"> Razón de Rechazo
+    <button
+      mat-icon-button
+      style="float: right;"
+      (click)="close()"
+    >
+        <i class="material-icons">close</i>
+    </button>
+</h2>
+<mat-dialog-content>
+    Su solicitud fue rechazada debido a:
+    <ul>
+        <li>
+            {{data.reason}}
+        </li>
+    </ul>
+</mat-dialog-content>

@@ -1,11 +1,62 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-12 col-md-6">
+      <div class="col-sm-12">
         <h2>Lista de Laboratorios</h2>
       </div>
     </div>
     <hr />
-    <div class="row"></div>
+    <div class="row" style="margin-top: 2rem;">      
+      <mat-accordion style="width: 45%; margin: 0 15px;" *ngFor="let admin of allAdmins">
+        <mat-expansion-panel style="margin: 20px 0;">
+          <mat-expansion-panel-header class="color-blue">
+              {{admin.id | uppercase}} - {{admin.name}}
+          </mat-expansion-panel-header>
+          <div class="row" style="margin: 10px 0;">
+            <div class="col-6 content-element-inside">
+              <span style="font-size: 18px;">Salas que Administra</span>
+            </div>
+            <div class="col-6 content-element-inside">
+              <span style="font-size: 18px;">Correo: {{admin.email}}</span>
+            </div>
+          </div>
+          <div *ngIf="roomGroupByAdmin[admin.id].length > 0">
+            <div class="row border-top" *ngFor="let room of roomGroupByAdmin[admin.id]">
+              <div class="col-6 content-element-inside">
+                <span style="font-size: 18px;">{{room.name}}</span>
+              </div>
+              <div class="col-6 content-element-inside">
+                <a
+                  button
+                  mat-raised-button
+                  class="btn btn-warning btn-block h-75"
+                  style="width: auto;"
+                  routerLink="/dashboard/rooms-details/{{room.id}}"
+                >
+                  Ir a la sala
+                </a>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="roomGroupByAdmin[admin.id].length === 0">
+            <div class="row border-top">
+              <div class="col-6 content-element-inside">
+                <span style="font-size: 18px;">No tiene salas registradas</span>
+              </div>
+              <div class="col-6 content-element-inside">
+                <a
+                  button
+                  mat-raised-button
+                  class="btn btn-default btn-block h-75"
+                  style="width: auto;"
+                >
+                  Ir a la sala
+                </a>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
   </div>
 </div>

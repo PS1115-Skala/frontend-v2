@@ -36,7 +36,7 @@
         <div class="card">
           <div class="card-header card-header-info">
             <h3 class="card-title">
-              <a routerLink="">{{ room.name }}</a>
+              <a [routerLink]="['../rooms-details/', room.id]">{{ room.name }}</a>
             </h3>
             <h4 class="card-category">
               {{ room.id }} - {{ room.manager_id | uppercase }}
@@ -45,7 +45,7 @@
 
           <div class="card-body row">
             <div class="col-12">
-              <a routerLink="">
+              <a [routerLink]="['../rooms-details/', room.id]">
                 <img class="img-fill" [src]="room.path_image" [alt]="room.name"
               /></a>
             </div>
@@ -57,7 +57,7 @@
                 button
                 mat-raised-button
                 class="btn btn-default btn-block h-75"
-                routerLink="/dashboard/horario/{{ room?.id }}"
+                [routerLink]="['../room-schedule/', room.id]"
               >
                 Ver Horarios
               </a>
@@ -67,7 +67,7 @@
                 button
                 mat-raised-button
                 class="btn btn-warning btn-block h-75"
-                routerLink="/dashboard/reserva/{{ room.id }}"
+                [routerLink]="['../room-reservation/', room.id]"
               >
                 Reservar
               </a>

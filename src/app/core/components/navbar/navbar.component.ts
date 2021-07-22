@@ -123,9 +123,9 @@ export class NavbarComponent implements OnInit {
     if (titlee.charAt(0) === "#") {
       titlee = titlee.slice(1);
     }
-
+    
     for (var item = 0; item < this.listTitles.length; item++) {
-      if (this.listTitles[item].path === titlee) {
+      if (titlee.includes(this.listTitles[item].path)) {
         return this.listTitles[item].title;
       }
     }
@@ -134,6 +134,7 @@ export class NavbarComponent implements OnInit {
 
   onLogout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("userName");
     this.router.navigate(["auth/login"]); // navigate login
   }
 }

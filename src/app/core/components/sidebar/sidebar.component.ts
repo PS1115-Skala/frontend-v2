@@ -48,32 +48,30 @@ export class SidebarComponent implements OnInit {
         class: "",
       },
       {
-        path: "/special-requests/list",
+        path: "/special-requests/add",
         title: "Reservas Especiales",
         icon: "flare",
         class: "",
       },
     ];
-    if (!this.userName) {
-      this.coreService.getUserDetails(userId).subscribe((user) => {
-        localStorage.setItem("userName", user[0].name);
-        this.userName = user[0].name;
-      });
-    }
-    if (!this.trimester) {
-      this.coreService.getTrimester().subscribe((term) => {
-        localStorage.setItem("term", term[0].id);
-        this.trimester = term[0].id;
-      });
-    }
+    this.coreService.getUserDetails(userId).subscribe((user) => {
+      localStorage.setItem("userName", user[0].name);
+      this.userName = user[0].name;
+    });
+    this.coreService.getTrimester().subscribe((term) => {
+      localStorage.setItem("term", term[0].id);
+      this.trimester = term[0].id;
+    });
     this.menuItems = ROUTES;
     if (userType == USER_TYPE.LAB_F) {
       this.addAdminRoute();
       this.addUsuariosRoute();
       this.addMetricRoute();
+      this.modifiedSpecialReservationsPath();
     }
     if (userType == USER_TYPE.LAB_ADMIN) {
       this.addNewRoomsRoute();
+      this.modifiedSpecialReservationsPath();
     }
   }
   isMobileMenu() {
@@ -112,10 +110,17 @@ export class SidebarComponent implements OnInit {
 
   addMetricRoute() {
     this.menuItems.push({
-      path: "/metricas",
+      path: "/metrics",
       title: "Métricas",
       icon: "analytics",
       class: "",
     });
+  }
+
+  modifiedSpecialReservationsPath() {
+    let reservasEspeciales = this.menuItems.find(
+      (item) => item.title == "Reservas Especiales"
+    );
+    reservasEspeciales.path = "/special-requests/list";
   }
 }

@@ -1,11 +1,68 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-12 col-md-6">
+      <div class="col-sm-12">
         <h2>Administración de Usuarios</h2>
       </div>
     </div>
     <hr />
-    <div class="row"></div>
+    <div class="card mt-5">
+      <div class="card-header card-header-info">
+        <h3 class="card-title">Listado de Usuarios</h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col" style="padding-bottom: 10px;">
+            <button mat-raised-button type="button" class="btn btn-warning pull-right" (click)="crearModificarUsuario()">
+              Nuevo Usuario
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive" *ngIf="isTableReady">
+          <table
+            datatable
+            [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger"
+            class="table row-border hover"
+          >
+          
+          <thead>
+            <tr *ngIf="!isLoading">
+              <th> User </th>
+              <th> Nombre </th>
+              <th> Correo </th>
+              <th> Tipo </th>
+              <th> Estatus </th>
+              <th> </th>
+              <!-- <th> </th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let element of dataSource">
+
+              <td> {{element.id}} </td>
+              <td> {{element.name}} </td>
+              <td> {{element.email}} </td>
+              <td> {{mapTipo(element.type)}} </td>
+              <td> {{element.is_active ? 'Activo' : 'Inactivo'}} </td>
+              <td>
+                <button mat-icon-button (click)="crearModificarUsuario(element.id)" 
+                [disabled]="element.modifiedDisabled">
+                  <i class="material-icons">edit</i>
+                </button>
+              </td>
+              <!-- <td> -->
+                <!-- <button mat-icon-button (click)="deletedUser(element.id)"  -->
+                <!-- [disabled]="element.deleteDisabled"> -->
+                  <!-- <i class="material-icons">delete</i> -->
+                <!-- </button> -->
+              <!-- </td> -->
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
   </div>
 </div>

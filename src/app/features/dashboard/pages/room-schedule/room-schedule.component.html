@@ -1,0 +1,98 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Horario de {{ room?.name }} ({{ roomId }})</h2>
+            </div>
+        </div>
+        <hr />
+        <div class="card mt-5">
+            <div class="card-header card-header-tabs card-header-info">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <span class="nav-tabs-title">Semanas: </span>
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item">
+                                <a mat-button class="nav-link" href="#" data-toggle="tab" (click)="specificWeek(1)">
+                                    <em class="material-icons">calendar_today</em> Especifica
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a mat-button class="nav-link" href="#" data-toggle="tab" (click)="othersWeek('pares')">
+                                    <em class="material-icons">filter_2</em> Pares
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a mat-button class="nav-link" href="#" data-toggle="tab" (click)="othersWeek('impares')">
+                                    <em class="material-icons">filter_3</em> Impares
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a mat-button class="nav-link active" href="#todas" data-toggle="tab" (click)="othersWeek('todas')">
+                                    <em class="material-icons">format_list_numbered</em> Todas
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <ng-container *ngIf="isSpecific">
+                    <div class="dropdown">
+                        <button href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true" data-container="true">
+                            <strong class="caret">Semana</strong>
+                        </button>
+                        <ul class="dropdown-menu" style="overflow:auto;">
+                            <li *ngFor="let number of numbers"><a (click)="specificWeek(number)">Semana {{ number }}</a></li>
+                        </ul>
+                    </div>
+                    <h3 class="text-center">Semana {{ week }}</h3>
+                </ng-container>
+                <div class="table-responsive table-full-width">
+                    <table mat-table [dataSource]="dataSource" class="table table-bordered">
+                        <ng-container matColumnDef="hour">
+                            <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 10%" scope="col">Hora</th>
+                            <td mat-cell *matCellDef="let sch" class="text-center">{{ sch.hour }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="lunes">
+                            <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 18%" scope="col">Lunes</th>
+                            <td mat-cell *matCellDef="let sch" [ngClass]="{'text-center table-warning': sch.lunes != null}">
+                                <strong class="caret" *ngIf="sch.lunes != null">{{ sch.lunes }}</strong>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="martes">
+                            <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 18%" scope="col">Martes</th>
+                            <td mat-cell *matCellDef="let sch" [ngClass]="{'text-center table-warning': sch.martes != null}">
+                                <strong class="caret" *ngIf="sch.martes != null">{{ sch.martes }}</strong>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="miercoles">
+                            <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 18%" scope="col">Miércoles</th>
+                            <td mat-cell *matCellDef="let sch" [ngClass]="{'text-center table-warning': sch.miercoles != null}">
+                                <strong class="caret" *ngIf="sch.miercoles != null">{{ sch.miercoles }}</strong>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="jueves">
+                            <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 18%" scope="col">Jueves</th>
+                            <td mat-cell *matCellDef="let sch" [ngClass]="{'text-center table-warning': sch.jueves != null}">
+                                <strong class="caret" *ngIf="sch.jueves != null">{{ sch.jueves }}</strong>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="viernes">
+                            <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 18%" scope="col">Viernes</th>
+                            <td mat-cell *matCellDef="let sch" [ngClass]="{'text-center table-warning': sch.viernes != null}">
+                                <strong class="caret" *ngIf="sch.viernes != null">{{ sch.viernes }}</strong>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    

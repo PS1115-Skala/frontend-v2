@@ -12,6 +12,10 @@ import { SpecialRequestsComponent } from "./features/special-requests/special-re
 import { AdminlabfComponent } from "./features/adminlabf/adminlabf.component";
 import { AdminRoomsComponent } from "./features/admin-rooms/admin-rooms.component";
 import { AdminUsersComponent } from "./features/admin-users/admin-users.component";
+import { BasicauthGuard } from "./core/guards/basicauth.guard";
+import { LabFGuard } from "./core/guards/lab-f.guard";
+import { AdminLabGuard } from "./core/guards/admin-lab.guard";
+import { MetricsComponent } from "./features/metrics/metrics.component";
 
 const routes: Routes = [
   {
@@ -22,6 +26,7 @@ const routes: Routes = [
   {
     path: "dashboard",
     component: DashboardComponent,
+    canActivate: [BasicauthGuard],
     children: [
       {
         path: "",
@@ -42,6 +47,7 @@ const routes: Routes = [
   {
     path: "requests",
     component: RequestsComponent,
+    canActivate: [BasicauthGuard],
     children: [
       {
         path: "",
@@ -52,6 +58,7 @@ const routes: Routes = [
   {
     path: "laboratories",
     component: LaboratoriesComponent,
+    canActivate: [BasicauthGuard],
     children: [
       {
         path: "",
@@ -63,6 +70,7 @@ const routes: Routes = [
   {
     path: "special-requests",
     component: SpecialRequestsComponent,
+    canActivate: [BasicauthGuard],
     children: [
       {
         path: "",
@@ -74,6 +82,7 @@ const routes: Routes = [
   {
     path: "admin-labf",
     component: AdminlabfComponent,
+    canActivate: [BasicauthGuard, LabFGuard],
     children: [
       {
         path: "",
@@ -84,6 +93,7 @@ const routes: Routes = [
   {
     path: "admin-rooms",
     component: AdminRoomsComponent,
+    canActivate: [BasicauthGuard, AdminLabGuard],
     children: [
       {
         path: "",
@@ -95,11 +105,23 @@ const routes: Routes = [
   {
     path: "admin-users",
     component: AdminUsersComponent,
+    canActivate: [BasicauthGuard, LabFGuard],
     children: [
       {
         path: "",
         loadChildren:
           "./features/admin-users/admin-users.module#AdminUsersModule",
+      },
+    ],
+  },
+  {
+    path: "metrics",
+    component: MetricsComponent,
+    canActivate: [BasicauthGuard, LabFGuard],
+    children: [
+      {
+        path: "",
+        loadChildren: "./features/metrics/metrics.module#MetricsModule",
       },
     ],
   },

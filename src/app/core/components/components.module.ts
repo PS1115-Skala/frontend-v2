@@ -8,12 +8,15 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
-import { MatRippleModule } from "@angular/material/core";
+import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSelectModule } from "@angular/material/select";
 import { DataTablesModule } from "angular-datatables";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 
 @NgModule({
   imports: [
@@ -26,6 +29,8 @@ import { MatDialogModule } from "@angular/material/dialog";
     MatSelectModule,
     MatTooltipModule,
     DataTablesModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   declarations: [
     FooterComponent,
@@ -46,6 +51,10 @@ import { MatDialogModule } from "@angular/material/dialog";
     MatTooltipModule,
     DataTablesModule,
     MatDialogModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
 })
 export class ComponentsModule {}

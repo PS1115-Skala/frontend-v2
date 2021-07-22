@@ -6,6 +6,7 @@ import { ComponentsModule } from "app/core/components/components.module";
 import { LaboratoriesComponent } from "./laboratories.component";
 import { DetailsLaboratoriesPageComponent } from "./pages/details-laboratories-page/details-laboratories-page.component";
 import { ListLaboratoriesPageComponent } from "./pages/list-laboratories-page/list-laboratories-page.component";
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,6 @@ import { ListLaboratoriesPageComponent } from "./pages/list-laboratories-page/li
     DetailsLaboratoriesPageComponent,
     ListLaboratoriesPageComponent,
   ],
-  imports: [CommonModule, LaboratoriesRoutingModule, ComponentsModule],
+    imports: [CommonModule, LaboratoriesRoutingModule, ComponentsModule, MatExpansionModule,],
 })
 export class LaboratoriesModule {}

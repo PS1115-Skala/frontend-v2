@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Semana Específica
+    <button
+      mat-icon-button
+      (click)="close()"
+      style="float: right;"
+    >
+        <i class="material-icons">close</i>
+    </button>
+</h2>
+<div mat-dialog-content>
+    <p> Especifíque la semana que desea seleccionar</p>
+    <div>
+        <mat-form-field>
+            <mat-select [(ngModel)]="week" name="week" placeholder="Semana" required>
+                <mat-option *ngFor="let option of numbers" [value]="option">{{option}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <button mat-button (click)="onSubmit()" style="float: right;">Ok</button>
+</div>
